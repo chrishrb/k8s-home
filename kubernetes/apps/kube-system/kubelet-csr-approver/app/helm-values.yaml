@@ -1,0 +1,3 @@
+---
+providerRegex: ^(kmaster1)$
+bypassDnsResolution: true

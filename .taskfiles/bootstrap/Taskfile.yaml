@@ -78,10 +78,8 @@ tasks:
 
   template:
     internal: true
-    cmd: '{{.VIRTUAL_ENV}}/bin/makejinja'
+    cmd: 'makejinja'
     preconditions:
-      - msg: Missing virtual environment
-        sh: test -d {{.VIRTUAL_ENV}}
       - msg: Missing Makejinja config file
         sh: test -f {{.MAKEJINJA_CONFIG_FILE}}
       - msg: Missing Makejinja plugin file
