@@ -7,14 +7,7 @@ kubernetesVersion: v1.31.2
 
 clusterName: "home-kubernetes"
 endpoint: https://77.237.232.194:6443
-clusterPodNets:
-  - "10.69.0.0/16"
-clusterSvcNets:
-  - "10.96.0.0/16"
-additionalApiServerCertSans: &sans
-  - "77.237.232.194"
-  - 127.0.0.1 # KubePrism
-additionalMachineCertSans: *sans
+allowSchedulingOnMasters: true
 
 # Disable built-in Flannel to use Cilium
 cniConfig:
@@ -26,18 +19,6 @@ nodes:
     installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
-    networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "00:50:56:54:32:f4"
-        dhcp: false
-        addresses:
-          - "77.237.232.194/24"
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "77.237.232.1"
-        mtu: 1500
-        vip:
-          ip: "77.237.232.194"
 
 # Global patches
 patches:
