@@ -12,3 +12,4 @@ resources:
   - ./external-secrets-charts.yaml
   - ./emqx-charts.yaml
   - ./ext-postgres-operator-charts.yaml
+  - ./cloudnative-pg-charts.yaml
