@@ -1,0 +1,24 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: emqx-dashboard
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: &host "emqx.${BASE_PATH}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: emqx-dashboard
+                port:
+                  number: 18083
+  tls:
+    - secretName: emqx-cherb-de-tls
+      hosts:
+        - *host
