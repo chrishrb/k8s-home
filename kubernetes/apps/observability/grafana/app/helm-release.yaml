@@ -91,7 +91,7 @@ spec:
           # renovate: depName="Metallb"
           gnetId: 20162
           revision: 5
-          datasource: 
+          datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
 
@@ -182,7 +182,7 @@ spec:
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
       GF_SECURITY_ALLOW_EMBEDDING: true
       GF_SECURITY_COOKIE_SAMESITE: grafana
-      GF_SERVER_ROOT_URL: "https://grafana.contabo.cherb.de"
+      GF_SERVER_ROOT_URL: "https://grafana.${BASE_PATH}"
       GF_FEATURE_TOGGLES_ENABLE: publicDashboards
       GF_SECURITY_ANGULAR_SUPPORT_ENABLED: true
 
@@ -202,7 +202,7 @@ spec:
         plugins: /var/lib/grafana/plugins
         provisioning: /etc/grafana/provisioning
       server:
-        root_url: https://grafana.contabo.cherb.de
+        root_url: "https://grafana.${BASE_PATH}"
 
     imageRenderer:
       enabled: true
@@ -213,9 +213,9 @@ spec:
         cert-manager.io/cluster-issuer: "letsencrypt-prod"
       ingressClassName: nginx
       hosts:
-        - &host grafana.contabo.cherb.de
+        - &host "grafana.${BASE_PATH}"
       tls:
-        - secretName: grafana-contabo-cherb-de-tls
+        - secretName: grafana-cherb-de-tls
           hosts:
             - *host
 

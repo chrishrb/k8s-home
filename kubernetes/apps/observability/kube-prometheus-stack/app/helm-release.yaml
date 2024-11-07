@@ -112,10 +112,10 @@ spec:
           cert-manager.io/cluster-issuer: "letsencrypt-prod"
         ingressClassName: nginx
         hosts:
-          - &host prometheus.contabo.cherb.de
+          - &host "prometheus.${BASE_PATH}"
         pathType: Prefix
         tls:
-          - secretName: prometheus-contabo-cherb-de-tls
+          - secretName: prometheus-cherb-de-tls
             hosts:
               - *host
 
