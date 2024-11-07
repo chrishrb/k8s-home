@@ -8,7 +8,7 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   rules:
-  - host: flux-webhook.contabo.cherb.de
+  - host: &host flux-webhook.contabo.cherb.de
     http:
       paths:
       - pathType: Prefix
@@ -18,3 +18,7 @@ spec:
             name: webhook-receiver
             port:
               number: 80
+    tls:
+    - secretName: flux-webhook-cherb-contabo-de-tls
+      hosts:
+        - *host
