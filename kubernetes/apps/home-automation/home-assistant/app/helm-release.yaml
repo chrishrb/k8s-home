@@ -1,0 +1,102 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: home-assistant
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 30m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      home-assistant:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsUser: 0 # Change when starting from scratch
+            runAsGroup: 568
+            runAsNonRoot: false # Change when starting from scratch
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/home-assistant/home-assistant
+              tag: 2024.10.4
+            env:
+              SECRET_RECORDER_DB_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: database-homeassistant-user
+                    key: POSTGRES_URL
+
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+
+            resources:
+              requests:
+                cpu: 100m
+                memory: 500M
+              limits:
+                memory: 1000M
+
+    service:
+      app:
+        controller: home-assistant
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 192.168.20.201
+        ports:
+          http:
+            port: 8123
+
+    ingress:
+      app:
+        className: nginx
+        annotations:
+          nginx.org/websocket-services: home-assistant
+          external-dns.alpha.kubernetes.io/target: ipv4.${BASE_PATH}
+        hosts:
+          - host: &host "hass.${BASE_PATH}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      config:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 10Gi
+        globalMounts:
+          - path: /config
