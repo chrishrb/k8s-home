@@ -69,9 +69,6 @@ spec:
     service:
       app:
         controller: home-assistant
-        type: LoadBalancer
-        annotations:
-          lbipam.cilium.io/ips: 192.168.20.201
         ports:
           http:
             port: 8123
@@ -80,8 +77,7 @@ spec:
       app:
         className: nginx
         annotations:
-          nginx.org/websocket-services: home-assistant
-          external-dns.alpha.kubernetes.io/target: ipv4.${BASE_PATH}
+          cert-manager.io/cluster-issuer: "letsencrypt-prod"
         hosts:
           - host: &host "hass.${BASE_PATH}"
             paths:
