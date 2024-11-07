@@ -42,3 +42,4 @@ spec:
   dependsOn:
     - name: openebs
     - name: external-secrets
+    - name: cloudnative-pg
