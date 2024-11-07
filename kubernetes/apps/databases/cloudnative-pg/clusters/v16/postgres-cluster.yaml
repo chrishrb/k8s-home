@@ -22,6 +22,9 @@ spec:
     limits:
       memory: 4Gi
 
+  affinity:
+    enablePodAntiAffinity: false
+
   postgresql:
     shared_preload_libraries:
       - "vectors.so"
