@@ -32,7 +32,7 @@
             kubectl
             kubectx
             talhelper
-            yq
+            yq-go
             python312
 
             makejinja
