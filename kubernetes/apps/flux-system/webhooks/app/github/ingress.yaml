@@ -18,7 +18,7 @@ spec:
             name: webhook-receiver
             port:
               number: 80
-    tls:
-    - secretName: flux-webhook-cherb-contabo-de-tls
-      hosts:
-        - *host
+  tls:
+  - secretName: flux-webhook-cherb-contabo-de-tls
+    hosts:
+      - *host
