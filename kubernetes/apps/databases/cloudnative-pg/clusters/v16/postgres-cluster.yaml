@@ -22,11 +22,6 @@ spec:
     limits:
       memory: 4Gi
 
-  affinity:
-    enablePodAntiAffinity: true
-    topologyKey: kubernetes.io/hostname
-    podAntiAffinityType: required
-
   postgresql:
     shared_preload_libraries:
       - "vectors.so"
