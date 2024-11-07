@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./database.yaml
   - ./helm-release.yaml
+  - ./ingress.yaml
