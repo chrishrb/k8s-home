@@ -80,14 +80,15 @@ spec:
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-prod"
         hosts:
-          - host: &host "hass.contabo.cherb.de"
+          - host: &host "hass.${BASE_PATH}"
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
         tls:
-          - hosts:
+          - secretName: hass-cherb-de-tls
+            hosts:
               - *host
 
     persistence:
