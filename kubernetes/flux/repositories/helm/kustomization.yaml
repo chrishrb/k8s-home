@@ -11,3 +11,4 @@ resources:
   - ./grafana-charts.yaml
   - ./external-secrets-charts.yaml
   - ./emqx-charts.yaml
+  - ./ext-postgres-operator-charts.yaml
