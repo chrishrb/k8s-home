@@ -69,6 +69,7 @@ spec:
     service:
       app:
         controller: home-assistant
+        type: ClusterIP
         ports:
           http:
             port: 8123
