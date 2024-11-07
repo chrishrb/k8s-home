@@ -3,13 +3,19 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./bitnami-charts.yaml
-  - ./ingress-nginx.yaml
-  - ./jetstack.yaml
-  - ./metallb.yaml
-  - ./metrics-server.yaml
-  - ./prometheus-community-charts.yaml
-  - ./grafana-charts.yaml
-  - ./external-secrets-charts.yaml
+  - ./bjw-s-charts.yaml
+  - ./cilium.yaml
+  - ./cloudnative-pg-charts.yaml
+  - ./coredns.yaml
   - ./emqx-charts.yaml
   - ./ext-postgres-operator-charts.yaml
-  - ./cloudnative-pg-charts.yaml
+  - ./external-secrets-charts.yaml
+  - ./grafana-charts.yaml
+  - ./ingress-nginx.yaml
+  - ./jetstack.yaml
+  - ./metrics-server.yaml
+  - ./openebs.yaml
+  - ./postfinance.yaml
+  - ./prometheus-community.yaml
+  - ./spegel.yaml
+  - ./stakater.yaml
