@@ -13,7 +13,7 @@ spec:
       version: 61.9.0
       sourceRef:
         kind: HelmRepository
-        name: prometheus-community-charts
+        name: prometheus-community
         namespace: flux-system
       interval: 30m
   install:
