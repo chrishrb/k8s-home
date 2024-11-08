@@ -21,4 +21,4 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: flux-webhook
-      GATUS_STATUS: 404
+      GATUS_STATUS: "404"
