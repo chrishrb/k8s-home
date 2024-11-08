@@ -40,5 +40,5 @@ spec:
     - name: emqx-operator
   postBuild:
     substitute:
-      APP: *app
+      APP: *app-cluster
       GATUS_SUBDOMAIN: emqx
