@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app grafana
+  name: &app gatus
   namespace: flux-system
   labels:
     substitution.flux.home.arpa/enabled: "true"
@@ -11,10 +11,14 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  interval: 30m
-  path: "./kubernetes/apps/observability/grafana/app"
-  prune: true
+  path: "./kubernetes/apps/observability/gatus/app"
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
+  dependsOn:
+    - name: postgres-cluster
+    - name: external-secrets
+  prune: true
   wait: true
+  interval: 30m
+  timeout: 5m

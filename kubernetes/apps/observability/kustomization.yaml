@@ -7,3 +7,4 @@ resources:
   - ./kube-prometheus-stack/ks.yaml
   - ./node-exporter/ks.yaml
   - ./grafana/ks.yaml
+  - ./gatus/ks.yaml
