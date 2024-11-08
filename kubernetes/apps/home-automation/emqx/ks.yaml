@@ -38,3 +38,7 @@ spec:
   wait: true
   dependsOn:
     - name: emqx-operator
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: emqx

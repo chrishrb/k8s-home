@@ -19,6 +19,10 @@ spec:
     - name: openebs
     - name: emqx-cluster
     - name: postgres-cluster
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: hass
   prune: true
   wait: true
   interval: 30m
