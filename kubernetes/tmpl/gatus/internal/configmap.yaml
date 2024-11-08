@@ -22,6 +22,9 @@ data:
           - "len([BODY]) == 0"
         alerts:
           - type: github
+            send-on-resolved: true
+            failure-threshold: 3
+            success-threshold: 5
 
       - name: "${APP}"
         group: internal
@@ -33,3 +36,6 @@ data:
           - "[STATUS] == ${GATUS_STATUS:-200}"
         alerts:
           - type: github
+            send-on-resolved: true
+            failure-threshold: 3
+            success-threshold: 5
