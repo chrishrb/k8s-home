@@ -21,10 +21,7 @@ data:
         conditions:
           - "len([BODY]) == 0"
         alerts:
-          - type: github
-            send-on-resolved: true
-            failure-threshold: 3
-            success-threshold: 5
+          - type: pushover
 
       - name: "${APP}"
         group: internal
@@ -35,7 +32,4 @@ data:
         conditions:
           - "[STATUS] == ${GATUS_STATUS:-200}"
         alerts:
-          - type: github
-            send-on-resolved: true
-            failure-threshold: 3
-            success-threshold: 5
+          - type: pushover
