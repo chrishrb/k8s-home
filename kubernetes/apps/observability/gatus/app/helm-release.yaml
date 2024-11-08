@@ -115,6 +115,8 @@ spec:
     ingress:
       main:
         className: nginx
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-prod"
         hosts:
           - host: &host status.${BASE_PATH}
             paths:
