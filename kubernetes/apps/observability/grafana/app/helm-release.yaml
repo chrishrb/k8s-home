@@ -64,6 +64,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/nginx
+          - name: kubernetes
+            disableDeletion: false
+            editable: true
+            folder: "Kubernetes"
+            options:
+              path: /var/lib/grafana/dashboards/kubernetes
+            orgId: 1
+            type: file
 
     dashboards:
       default:
