@@ -33,7 +33,9 @@
             kubectx
             talhelper
             yq-go
+            restic
             python312
+            rclone
 
             makejinja
             python312Packages.email-validator

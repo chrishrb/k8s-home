@@ -8,3 +8,6 @@ resources:
   - ./node-exporter/ks.yaml
   - ./grafana/ks.yaml
   - ./gatus/ks.yaml
+  - ./kube-state-metrics/ks.yaml
+  - ./promtail/ks.yaml
+  - ./loki/ks.yaml

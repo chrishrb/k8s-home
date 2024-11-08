@@ -5,3 +5,4 @@ resources:
   - ./cluster.yaml
   - ./ingress.yaml
   - ./pod-monitor.yaml
+  - ../../../../tmpl/gatus/external

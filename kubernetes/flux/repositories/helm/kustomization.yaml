@@ -19,3 +19,5 @@ resources:
   - ./prometheus-community.yaml
   - ./spegel.yaml
   - ./stakater.yaml
+  - ./backube.yaml
+  - ./piraeus.yaml

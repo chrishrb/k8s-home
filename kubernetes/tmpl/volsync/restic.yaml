@@ -1,0 +1,73 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: "${APP}-volsync"
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: bitwarden-secretsmanager
+  target:
+    name: "${APP}-volsync-secret"
+    template:
+      engineVersion: v2
+      data:
+        RESTIC_REPOSITORY: "rclone:backup:/k8s-home-backup/${APP}"
+        RESTIC_PASSWORD: "{{ .RESTIC_PASSWORD }}"
+
+        # FTPS
+        RCLONE_CONFIG_BACKUP_TYPE: sftp
+        RCLONE_CONFIG_BACKUP_HOST: "{{ .HOST }}"
+        RCLONE_CONFIG_BACKUP_USER: "{{ .USER }}"
+        RCLONE_CONFIG_BACKUP_PASS: "{{ .PASSWORD }}"
+        RCLONE_CONFIG_BACKUP_SHELL_TYPE: "unix"
+        RCLONE_CONFIG_BACKUP_MD5SUM_COMMAND: "none"
+        RCLONE_CONFIG_BACKUP_SHA1SUM_COMMAND: "none"
+  dataFrom:
+    - extract:
+        key: 9d80878e-91d8-41e8-8d7e-b2220188317d
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: "${APP}"
+spec:
+  sourcePVC: "${VOLSYNC_CLAIM:-${APP}}"
+  trigger:
+    schedule: "0 * * * *"
+  restic:
+    copyMethod: "${VOLSYNC_COPYMETHOD:-Direct}"
+    pruneIntervalDays: 14
+    repository: "${APP}-volsync-secret"
+    storageClassName: "${VOLSYNC_STORAGECLASS:-openebs-hostpath}"
+    accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
+    moverSecurityContext:
+      runAsUser: ${VOLSYNC_PUID:-568}
+      runAsGroup: ${VOLSYNC_PGID:-568}
+      fsGroup: ${VOLSYNC_PGID:-568}
+    retain:
+      hourly: 24
+      daily: 7
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationdestination_v1alpha1.json
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: "${APP}-bootstrap"
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    destinationPVC: "${VOLSYNC_CLAIM:-${APP}}"
+    repository: "${APP}-volsync-secret"
+    copyMethod: Direct
+    storageClassName: "${VOLSYNC_STORAGECLASS:-openebs-hostpath}"
+    moverSecurityContext:
+      runAsUser: ${VOLSYNC_PUID:-568}
+      runAsGroup: ${VOLSYNC_PGID:-568}
+      fsGroup: ${VOLSYNC_PGID:-568}
+    enableFileDeletion: true
+    cleanupCachePVC: true
+    cleanupTempPVC: true
