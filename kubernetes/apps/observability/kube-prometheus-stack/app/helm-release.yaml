@@ -34,8 +34,6 @@ spec:
     ### Component values
     ###
     alertmanager:
-      ingress:
-        enabled: false
       alertmanagerSpec:
         useExistingSecret: true
         configSecret: alertmanager-secret
@@ -134,7 +132,6 @@ spec:
     ### Prometheus instance values
     ###
     prometheus:
-      # TODO: internal dns?
       ingress:
         enabled: false
         annotations:
@@ -149,11 +146,6 @@ spec:
               - *host
 
       prometheusSpec:
-        alertingEndpoints:
-          - namespace: observability
-            name: alertmanager
-            port: 9093
-            apiVersion: v2
         enableAdminAPI: true
         enableFeatures:
           - auto-gomaxprocs
