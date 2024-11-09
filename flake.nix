@@ -33,6 +33,7 @@
             kubectx
             talhelper
             yq-go
+            restic
             python312
 
             makejinja
