@@ -39,6 +39,7 @@ spec:
         annotations:
           lbipam.cilium.io/sharing-cross-namespace: "*"
           lbipam.cilium.io/sharing-key: default
+          lbipam.cilium.io/ips: "77.237.232.194"
 
       publishService:
         enabled: true
