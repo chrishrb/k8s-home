@@ -36,6 +36,9 @@ spec:
       service:
         enabled: true
         type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/sharing-key: default
+
       publishService:
         enabled: true
 
