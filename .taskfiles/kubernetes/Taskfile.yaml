@@ -34,14 +34,14 @@ tasks:
       APP: Path to the Flux Kustomization resource from the apps base dir (required, e.g. network/echo-server)
       NS: Namespace the Flux Kustomization exists in (default: flux-system)
     cmd: >
-      flux build --namespace {{.NS}} ks {{base .APP}}
+      flux build --namespace {{.NS}} ks {{base .KS_NAME}}
       --kustomization-file {{.KUBERNETES_DIR}}/apps/{{.APP}}/ks.yaml
       --path {{.KUBERNETES_DIR}}/apps/{{.APP}}
       {{- if contains "not found" .KS }} --dry-run \{{ end }}
       | yq 'with(select(.apiVersion == "kustomize.toolkit.fluxcd.io/v1" and .kind == "Kustomization"); .metadata.namespace = "{{.NS}}")' -
       | kubectl delete -f -
     requires:
-      vars: [APP]
+      vars: [APP, KS_NAME]
     vars:
       NS: '{{.NS | default "flux-system"}}'
       KS:
