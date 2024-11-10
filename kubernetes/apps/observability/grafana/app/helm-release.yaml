@@ -155,9 +155,11 @@ spec:
           - { name: Loki, orgId: 1 }
           - { name: Prometheus, orgId: 1 }
         datasources:
-          - access: proxy
-            name: Prometheus
+          - name: Prometheus
             type: prometheus
+            uid: prometheus
+            access: proxy
+            editable: false
             url: http://prometheus-operated.observability.svc.cluster.local:9090
             isDefault: true
             jsonData:
@@ -166,6 +168,7 @@ spec:
             type: loki
             uid: loki
             access: proxy
+            editable: false
             url: http://loki-headless.observability.svc.cluster.local:3100
             jsonData:
               maxLines: 250
@@ -173,6 +176,7 @@ spec:
             type: alertmanager
             uid: alertmanager
             access: proxy
+            editable: false
             url: http://alertmanager-operated.observability.svc.cluster.local:9093
             jsonData:
               implementation: prometheus
