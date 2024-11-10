@@ -38,6 +38,7 @@ spec:
         secret:
           secretName: emqx-secret
           secretKey: X_EMQX_EXPORTER_APIKEY_SECRET
+
   coreTemplate:
     metadata:
       annotations:
