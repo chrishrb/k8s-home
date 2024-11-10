@@ -5,3 +5,4 @@ metadata:
   name: home-automation
   annotations:
     volsync.backube/privileged-movers: "true"
+    lbipam.cilium.io/sharing-cross-namespace: "*"
