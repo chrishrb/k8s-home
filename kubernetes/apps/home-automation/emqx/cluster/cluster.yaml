@@ -50,8 +50,9 @@ spec:
             secretName: emqx-init-user-secret
 
   listenersServiceTemplate:
-    spec:
-      type: LoadBalancer
+    metadata:
       annotations:
         lbipam.cilium.io/sharing-key: default
+    spec:
+      type: LoadBalancer
 
