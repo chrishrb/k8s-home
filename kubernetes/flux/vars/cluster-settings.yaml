@@ -5,4 +5,4 @@ metadata:
   name: cluster-settings
   namespace: flux-system
 data:
-  BASE_PATH: contabo.cherb.de
+  BASE_PATH: cherb.de
