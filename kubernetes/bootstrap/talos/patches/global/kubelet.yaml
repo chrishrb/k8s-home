@@ -5,3 +5,4 @@ machine:
     nodeIP:
       validSubnets:
         - 77.237.232.194/32
+        - 167.86.123.22/32
