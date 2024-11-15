@@ -71,5 +71,6 @@ spec:
       runAsGroup: ${VOLSYNC_PGID:-568}
       fsGroup: ${VOLSYNC_PGID:-568}
     enableFileDeletion: true
+    restoreAsOf: 2024-11-14T20:00:00-00:00
     cleanupCachePVC: true
     cleanupTempPVC: true
