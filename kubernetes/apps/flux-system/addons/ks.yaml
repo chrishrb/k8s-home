@@ -22,3 +22,5 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: flux-webhook
       GATUS_STATUS: "404"
+  dependsOn:
+    - name: external-secrets

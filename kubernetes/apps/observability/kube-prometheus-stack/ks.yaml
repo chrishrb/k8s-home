@@ -21,3 +21,5 @@ spec:
   wait: true
   dependsOn:
     - name: openebs
+  dependsOn:
+    - name: external-secrets
