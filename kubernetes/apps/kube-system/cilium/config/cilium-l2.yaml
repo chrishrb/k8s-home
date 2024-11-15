@@ -6,10 +6,6 @@ metadata:
   name: l2-policy
 spec:
   loadBalancerIPs: true
-  # NOTE: interfaces might need to be set if you have more than one active NIC on your hosts
-  # interfaces:
-  #   - ^eno[0-9]+
-  #   - ^eth[0-9]+
   nodeSelector:
     matchLabels:
       kubernetes.io/os: linux
@@ -21,4 +17,4 @@ metadata:
 spec:
   allowFirstLastIPs: "Yes"
   blocks:
-    - cidr: "77.237.232.194/32"
+    - cidr: "184.174.36.58/32"
