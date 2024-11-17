@@ -13,6 +13,9 @@ allowSchedulingOnMasters: true
 cniConfig:
   name: none
 
+additionalApiServerCertSans:
+  - kube.cherb.de
+
 nodes:
   - hostname: "kmaster1"
     ipAddress: "184.174.36.58"
