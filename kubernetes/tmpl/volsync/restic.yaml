@@ -35,7 +35,7 @@ metadata:
   name: "${APP}"
 spec:
   # INFO: activate this before restoring on a new cluster so the backup isn‘t created before the restore
-  paused: true
+  paused: false
   sourcePVC: "${VOLSYNC_CLAIM:-${APP}}"
   trigger:
     schedule: "0 * * * *"
