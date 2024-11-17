@@ -6,7 +6,7 @@ talosVersion: v1.8.3
 kubernetesVersion: v1.31.2
 
 clusterName: "home-kubernetes"
-endpoint: https://184.174.36.58:6443
+endpoint: https://kube.cherb.de:6443
 allowSchedulingOnMasters: true
 
 # Disable built-in Flannel to use Cilium
@@ -15,21 +15,10 @@ cniConfig:
 
 nodes:
   - hostname: "kmaster1"
-    ipAddress: "184.174.36.58"
+    ipAddress: "77.237.232.194"
     installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
-    networkInterfaces:
-    - deviceSelector:
-        hardwareAddr: "00:50:56:41:8f:22"
-  - hostname: "kworker1"
-    ipAddress: "100.42.177.169"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
-    controlPlane: false
-    networkInterfaces:
-    - deviceSelector:
-        hardwareAddr: "00:50:56:54:32:f4"
 
 # Global patches
 patches:
@@ -37,8 +26,8 @@ patches:
   - "@./patches/global/containerd.yaml"
   - "@./patches/global/disable-search-domain.yaml"
   - "@./patches/global/dns.yaml"
+  - "@./patches/global/hostdns.yaml"
   - "@./patches/global/kubelet.yaml"
-  - "@./patches/global/kubespan.yaml"
   - "@./patches/global/ntp.yaml"
   - "@./patches/global/openebs-local.yaml"
   - "@./patches/global/sysctl.yaml"
