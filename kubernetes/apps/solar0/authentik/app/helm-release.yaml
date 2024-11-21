@@ -58,7 +58,8 @@ spec:
         paths:
           - /
         tls:
-          - hosts:
+          - secretName: id-solar0-tls
+            hosts:
               - *host
     prometheus:
       rules:
