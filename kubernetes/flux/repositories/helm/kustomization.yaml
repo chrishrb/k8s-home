@@ -21,3 +21,6 @@ resources:
   - ./stakater.yaml
   - ./backube.yaml
   - ./piraeus.yaml
+  - ./strimzi.yaml
+  - ./skm.yaml
+  - ./authentik.yaml
