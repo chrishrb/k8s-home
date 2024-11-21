@@ -24,6 +24,8 @@ spec:
           cert-manager.io/cluster-issuer: "letsencrypt-prod"
         hosts:
           - host: &host "sftpgo.solar0.cherb.de"
+            paths:
+          -   path: /
         tls:
           - secretName: sftpgo-solar0-tls
             hosts:
