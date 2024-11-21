@@ -16,6 +16,9 @@ spec:
         name: skm
         namespace: flux-system
   values:
+    envFrom:
+      - secretRef:
+          name: sftpgo-secret
     ui:
       ingress:
         enabled: true
