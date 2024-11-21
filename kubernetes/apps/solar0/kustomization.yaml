@@ -6,3 +6,4 @@ resources:
   - ./authentik/ks.yaml
   - ./sftpgo/ks.yaml
   - ./strimzi/ks.yaml
+  - ./solar0/ks.yaml
