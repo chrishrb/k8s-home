@@ -26,6 +26,7 @@ spec:
           - host: &host "sftpgo.solar0.cherb.de"
             paths:
               - path: /
+                pathType: Prefix
         tls:
           - secretName: sftpgo-solar0-tls
             hosts:
