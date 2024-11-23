@@ -145,6 +145,7 @@
       ],
       semanticCommitType: 'fix',
       semanticCommitScope: 'container',
+      automerge: true,
     },
     {
       matchDatasources: [
@@ -184,6 +185,7 @@
       ],
       semanticCommitType: 'fix',
       semanticCommitScope: 'helm',
+      automerge: true,
     },
     {
       matchDatasources: [
@@ -216,6 +218,7 @@
       ],
       semanticCommitType: 'fix',
       semanticCommitScope: 'github-release',
+      automerge: true,
     },
     {
       matchManagers: [
@@ -245,6 +248,7 @@
       ],
       semanticCommitType: 'fix',
       semanticCommitScope: 'github-action',
+      automerge: true,
     },
     {
       matchUpdateTypes: [
