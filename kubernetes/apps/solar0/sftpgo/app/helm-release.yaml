@@ -24,22 +24,22 @@ spec:
       - name: SFTPGO_DATA_PROVIDER__HOST
         valueFrom:
           secretKeyRef:
-            name: sftpgo-database
+            name: database-sftpgo-user
             key: HOST
       - name: SFTPGO_DATA_PROVIDER__USERNAME
         valueFrom:
           secretKeyRef:
-            name: sftpgo-database
+            name: database-sftpgo-user
             key: LOGIN
       - name: SFTPGO_DATA_PROVIDER__PASSWORD
         valueFrom:
           secretKeyRef:
-            name: sftpgo-database
+            name: database-sftpgo-user
             key: PASSWORD
       - name: SFTPGO_DATA_PROVIDER__NAME
         valueFrom:
           secretKeyRef:
-            name: sftpgo-database
+            name: database-sftpgo-user
             key: DATABASE_NAME
     envFrom:
       - secretRef:
