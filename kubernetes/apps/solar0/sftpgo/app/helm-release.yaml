@@ -16,9 +16,42 @@ spec:
         name: skm
         namespace: flux-system
   values:
+    envVars:
+      - name: SFTPGO_DATA_PROVIDER__DRIVER
+        value: postgresql
+      - name: SFTPGO_DATA_PROVIDER__PORT
+        value: 5432
+      - name: SFTPGO_DATA_PROVIDER__HOST
+        valueFrom:
+          secretKeyRef:
+            name: sftpgo-database
+            key: HOST
+      - name: SFTPGO_DATA_PROVIDER__USERNAME
+        valueFrom:
+          secretKeyRef:
+            name: sftpgo-database
+            key: LOGIN
+      - name: SFTPGO_DATA_PROVIDER__PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: sftpgo-database
+            key: PASSWORD
+      - name: SFTPGO_DATA_PROVIDER__NAME
+        valueFrom:
+          secretKeyRef:
+            name: sftpgo-database
+            key: DATABASE_NAME
     envFrom:
       - secretRef:
           name: sftpgo-secret
+    volumeMounts:
+      - name: sftpgo-storage
+        mountPath: /srv/sftpgo
+    volumes:
+      - name: sftpgo-storage
+        persistentVolumeClaim:
+          claimName: sftpgo-data
+
     ui:
       ingress:
         enabled: true
@@ -34,8 +67,3 @@ spec:
           - secretName: sftpgo-solar0-tls
             hosts:
               - *host
-    persistence:
-      # -- Enable persistent storage for the /var/lib/sftpgo directory, saving state of the default sqlite db.
-      enabled: false
-      config:
-        existingClaim: "${VOLSYNC_CLAIM}"

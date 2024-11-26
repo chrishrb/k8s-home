@@ -25,6 +25,6 @@ spec:
       APP: *app
       VOLSYNC_PUID: "0"
       VOLSYNC_PGID: "0"
-      VOLSYNC_CLAIM: home-assistant-config
-      VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_CLAIM: sftpgo-data
+      VOLSYNC_CAPACITY: 20Gi
       GATUS_SUBDOMAIN: sftpgo.solar0
