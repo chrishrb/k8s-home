@@ -20,7 +20,7 @@ spec:
       - name: SFTPGO_DATA_PROVIDER__DRIVER
         value: postgresql
       - name: SFTPGO_DATA_PROVIDER__PORT
-        value: 5432
+        value: "5432"
       - name: SFTPGO_DATA_PROVIDER__HOST
         valueFrom:
           secretKeyRef:
