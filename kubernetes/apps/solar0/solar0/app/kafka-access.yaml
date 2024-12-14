@@ -1,9 +1,0 @@
-apiVersion: access.strimzi.io/v1alpha1
-kind: KafkaAccess
-metadata:
-  name: solar0-kafka-access
-spec:
-  kafka:
-    name: solar0-cluster
-    namespace: solar0
-    listener: plain
