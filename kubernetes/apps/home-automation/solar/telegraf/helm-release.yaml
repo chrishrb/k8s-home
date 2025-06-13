@@ -67,20 +67,16 @@ spec:
             servers:
               - "tcp://emqx-listeners.home-automation.svc.cluster.local:1883"
             topics:
-              - "solar/home"
+              - "solar/home/#"
             client_id: "k8s-home-telegraf"
             username: "$MQTT_USERNAME"
             password: "$MQTT_PASSWORD"
             data_format: "json"
-            json_query: "values"
             tag_keys:
-              - "Aktives Team"
-              - "Status"
-              - "Teamfunktion"
-              - "Fehler"
+              - "sn"
             json_time_key: "time"
             json_time_format: "unix"
-            name_override: "solar_data"
+            name_override: "solar_15s"
             json_string_fields:
               - "Status"
               - "Fehler"
