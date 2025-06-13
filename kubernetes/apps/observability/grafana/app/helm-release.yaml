@@ -83,6 +83,14 @@ spec:
               path: /var/lib/grafana/dashboards/kubernetes
             orgId: 1
             type: file
+          - name: solar
+            disableDeletion: false
+            editable: true
+            folder: "Solar"
+            options:
+              path: /var/lib/grafana/dashboards/solar
+            orgId: 1
+            type: file
 
     dashboards:
       default:
@@ -116,20 +124,6 @@ spec:
         node-feature-discovery:
           url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
           datasource: Prometheus
-
-        # Solar dashboards
-        solar-day:
-          json: |
-            $${indent(8, file("$${path.module}/dashboards/solar-day.json"))}
-          datasource: InfluxDB
-        solar-month:
-          json: |
-            $${indent(8, file("$${path.module}/dashboards/solar-month.json"))}
-          datasource: InfluxDB
-        solar-year:
-          json: |
-            $${indent(8, file("$${path.module}/dashboards/solar-year.json"))}
-          datasource: InfluxDB
 
       kubernetes:
         kubernetes-api-server:
@@ -206,6 +200,9 @@ spec:
         nginx-request-handling-performance:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
           datasource: Prometheus
+
+    dashboardsConfigMaps:
+      solar: "solar-dashboards"
 
     datasources:
       datasources.yaml:
