@@ -1,0 +1,97 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app telegraf
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: *app
+      version: 1.8.57
+      sourceRef:
+        kind: HelmRepository
+        name: influxdata
+        namespace: flux-system
+      interval: 30m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    env:
+      - name: MQTT_USERNAME
+        valueFrom:
+          secretKeyRef:
+            name: emqx-init-user-secret
+            key: user_id
+      - name: MQTT_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: emqx-init-user-secret
+            key: password
+      - name: INFLUXDB_USERNAME
+        valueFrom:
+          secretKeyRef:
+            name: influxdb-auth-secret
+            key: influxdb-user
+      - name: INFLUXDB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: influxdb-auth-secret
+            key: influxdb-password
+    config:
+      # Global agent settings
+      agent:
+        interval: "10s"
+        round_interval: true
+        metric_batch_size: 1000
+        metric_buffer_limit: 10000
+        collection_jitter: "0s"
+        flush_interval: "10s"
+        flush_jitter: "0s"
+        precision: ""
+        hostname: ""
+        omit_hostname: false
+
+      # Input plugins
+      inputs:
+        - mqtt_consumer:
+            servers:
+              - "tcp://emqx-listeners.home-automation.svc.cluster.local:1883"
+            topics:
+              - "solar/home"
+            client_id: "k8s-home-telegraf"
+            username: "${MQTT_USERNAME}" # replace with user from secret
+            password: "${MQTT_PASSWORD}" # replace with password from secret
+            data_format: "json"
+            json_query: "values"
+            tag_keys:
+              - "Aktives Team"
+              - "Status"
+              - "Teamfunktion"
+              - "Fehler"
+            json_timestamp_key: "time"
+            json_time_format: "unix"
+            name_override: "solar_data"
+            json_string_fields:
+              - "Status"
+              - "Fehler"
+
+      # Output plugins
+      outputs:
+        - influxdb:
+            urls:
+              - "http://influxdb.home-automation.svc.cluster.local:8086"
+            database: "solarlog"
+            username: "${INFLUXDB_USERNAME}"
+            password: "${INFLUXDB_PASSWORD}"
+            retention_policy: ""
+            timeout: "5s"

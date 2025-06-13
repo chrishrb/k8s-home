@@ -24,3 +24,4 @@ resources:
   - ./strimzi.yaml
   - ./skm.yaml
   - ./authentik.yaml
+  - ./influxdata.yaml
