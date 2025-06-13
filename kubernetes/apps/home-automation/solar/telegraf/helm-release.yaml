@@ -78,7 +78,7 @@ spec:
               - "Status"
               - "Teamfunktion"
               - "Fehler"
-            json_timestamp_key: "time"
+            json_time_key: "time"
             json_time_format: "unix"
             name_override: "solar_data"
             json_string_fields:
