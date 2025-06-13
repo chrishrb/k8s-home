@@ -246,9 +246,9 @@ spec:
             uid: influxdb
             access: proxy
             url: http://influxdb.home-automation.svc.cluster.local:8086
-            user: "${INFLUXDB_USER}"
+            user: "$INFLUXDB_USER"
             secureJsonData:
-              password: "${INFLUXDB_PASSWORD}"
+              password: "$INFLUXDB_PASSWORD"
             database: solarlog
             editable: false
 
