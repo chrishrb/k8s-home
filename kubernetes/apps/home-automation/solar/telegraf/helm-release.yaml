@@ -69,8 +69,8 @@ spec:
             topics:
               - "solar/home"
             client_id: "k8s-home-telegraf"
-            username: "${MQTT_USERNAME}" # replace with user from secret
-            password: "${MQTT_PASSWORD}" # replace with password from secret
+            username: "$MQTT_USERNAME"
+            password: "$MQTT_PASSWORD"
             data_format: "json"
             json_query: "values"
             tag_keys:
@@ -91,7 +91,7 @@ spec:
             urls:
               - "http://influxdb.home-automation.svc.cluster.local:8086"
             database: "solarlog"
-            username: "${INFLUXDB_USERNAME}"
-            password: "${INFLUXDB_PASSWORD}"
+            username: "$INFLUXDB_USERNAME"
+            password: "$INFLUXDB_PASSWORD"
             retention_policy: ""
             timeout: "5s"
