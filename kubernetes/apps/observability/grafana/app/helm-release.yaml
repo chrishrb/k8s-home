@@ -245,7 +245,6 @@ spec:
             type: influxdb
             uid: influxdb
             access: proxy
-            editable: false
             url: http://influxdb.home-automation.svc.cluster.local:8086
             user: "${INFLUXDB_USER}"
             secureJsonData:
