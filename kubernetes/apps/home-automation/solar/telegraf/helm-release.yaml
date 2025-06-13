@@ -30,12 +30,12 @@ spec:
       - name: MQTT_USERNAME
         valueFrom:
           secretKeyRef:
-            name: emqx-init-user-secret
-            key: user_id
+            name: emqx-mqtt-auth-secret
+            key: username
       - name: MQTT_PASSWORD
         valueFrom:
           secretKeyRef:
-            name: emqx-init-user-secret
+            name: emqx-mqtt-auth-secret
             key: password
       - name: INFLUXDB_USERNAME
         valueFrom:
