@@ -120,15 +120,15 @@ spec:
         # Solar dashboards
         solar-day:
           json: |
-            ${indent(6, file("${path.module}/dashboards/solar-day.json"))}
+            ${indent(8, file("${path.module}/dashboards/solar-day.json"))}
           datasource: InfluxDB
         solar-month:
           json: |
-            ${indent(6, file("${path.module}/dashboards/solar-month.json"))}
+            ${indent(8, file("${path.module}/dashboards/solar-month.json"))}
           datasource: InfluxDB
         solar-year:
           json: |
-            ${indent(6, file("${path.module}/dashboards/solar-year.json"))}
+            ${indent(8, file("${path.module}/dashboards/solar-year.json"))}
           datasource: InfluxDB
 
       kubernetes:
