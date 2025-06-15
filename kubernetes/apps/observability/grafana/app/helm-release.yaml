@@ -37,7 +37,7 @@ spec:
       passwordKey: adminPass
 
     envFromSecrets:
-      - influxdb-auth-secret
+      - name: influxdb-auth-secret
 
     dashboardProviders:
       dashboardproviders.yaml:
