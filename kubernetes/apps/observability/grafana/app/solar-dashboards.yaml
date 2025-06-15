@@ -1659,7 +1659,9 @@ data:
       "preload": false,
       "refresh": "5s",
       "schemaVersion": 41,
-      "tags": [],
+      "tags": [
+        "solar"
+      ],
       "templating": {
         "list": [
           {
@@ -2341,7 +2343,9 @@ data:
       "preload": false,
       "refresh": "5s",
       "schemaVersion": 41,
-      "tags": [],
+      "tags": [
+        "solar"
+      ],
       "templating": {
         "list": [
           {
@@ -2958,7 +2962,9 @@ data:
       ],
       "preload": false,
       "schemaVersion": 41,
-      "tags": [],
+      "tags": [
+        "solar"
+      ],
       "templating": {
         "list": [
           {
