@@ -1670,14 +1670,14 @@ data:
             "hide": 2,
             "label": "Euro / kWh",
             "name": "price",
-            "query": "",
+            "query": "0.30",
             "skipUrlSync": true,
             "type": "constant",
             "options": [
               {
                 "selected": true,
                 "text": "",
-                "value": "0.30"
+                "value": ""
               }
             ]
           }
@@ -2352,14 +2352,14 @@ data:
             "hide": 2,
             "label": "Euro / kWh",
             "name": "price",
-            "query": "",
+            "query": "0.30",
             "skipUrlSync": true,
             "type": "constant",
             "options": [
               {
                 "selected": true,
                 "text": "",
-                "value": "0.30"
+                "value": ""
               }
             ]
           }
@@ -2969,14 +2969,14 @@ data:
             "hide": 2,
             "label": "Euro / kWh",
             "name": "price",
-            "query": "",
+            "query": "0.30",
             "skipUrlSync": true,
             "type": "constant",
             "options": [
               {
                 "selected": true,
                 "text": "",
-                "value": "0.30"
+                "value": ""
               }
             ]
           }
