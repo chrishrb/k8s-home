@@ -26,6 +26,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    metrics:
+      health:
+        enabled: true
+
     env:
       - name: MQTT_USERNAME
         valueFrom:
