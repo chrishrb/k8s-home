@@ -50,46 +50,8 @@ spec:
 
         continuous-queries.iql: |+
           -- Continuous Queries
-          CREATE CONTINUOUS QUERY summarize_1d ON solarlog
-          BEGIN
-            SELECT difference(last("values_E-Total")) AS Pac
-            INTO solarlog.autogen.solar_1d
-            FROM solarlog.autogen.solar_15s
-            GROUP BY time(1d), sn
-          END;
-
-          CREATE CONTINUOUS QUERY summarize_5m ON solarlog
-          BEGIN
-            SELECT difference(last("values_E-Total")) * 1000 * 12 AS Pac
-            INTO solarlog.autogen.solar_5m
-            FROM solarlog.autogen.solar_15s
-            GROUP BY time(5m), sn
-          END;
-
-          CREATE CONTINUOUS QUERY summarize_electricity_1d ON solarlog
-          BEGIN
-            SELECT difference(last(total)) AS total
-            INTO solarlog.autogen.electricity_1d
-            FROM solarlog.few_days.electricity_1s
-            GROUP BY time(1d)
-          END;
-
-          CREATE CONTINUOUS QUERY summarize_electricity_5m ON solarlog
-          BEGIN
-            SELECT difference(last(total)) * 1000 * 12 AS total
-            INTO solarlog.autogen.electricity_5m
-            FROM solarlog.few_days.electricity_1s
-            GROUP BY time(5m)
-          END;
-
-          CREATE CONTINUOUS QUERY summarize_electricity_15s ON solarlog
-          BEGIN
-            SELECT mean(current) AS current,
-                   mean(current_p1) AS current_p1,
-                   mean(current_p2) AS current_p2,
-                   mean(current_p3) AS current_p3,
-                   last(total) AS total
-            INTO solarlog.autogen.electricity_15s
-            FROM solarlog.few_days.electricity_1s
-            GROUP BY time(15s)
-          END;
+          CREATE CONTINUOUS QUERY summarize_1d ON solarlog BEGIN SELECT difference(last("values_E-Total")) AS Pac INTO solarlog.autogen.solar_1d FROM solarlog.autogen.solar_15s GROUP BY time(1d), sn END;
+          CREATE CONTINUOUS QUERY summarize_5m ON solarlog BEGIN SELECT difference(last("values_E-Total")) * 1000 * 12 AS Pac INTO solarlog.autogen.solar_5m FROM solarlog.autogen.solar_15s GROUP BY time(5m), sn END;
+          CREATE CONTINUOUS QUERY summarize_electricity_1d ON solarlog BEGIN SELECT difference(last(total)) AS total INTO solarlog.autogen.electricity_1d FROM solarlog.few_days.electricity_1s GROUP BY time(1d) END;
+          CREATE CONTINUOUS QUERY summarize_electricity_5m ON solarlog BEGIN SELECT difference(last(total)) * 1000 * 12 AS total INTO solarlog.autogen.electricity_5m FROM solarlog.few_days.electricity_1s GROUP BY time(5m) END;
+          CREATE CONTINUOUS QUERY summarize_electricity_15s ON solarlog BEGIN SELECT mean(current) AS current, mean(current_p1) AS current_p1, mean(current_p2) AS current_p2, mean(current_p3) AS current_p3, last(total) AS total INTO solarlog.autogen.electricity_15s FROM solarlog.few_days.electricity_1s GROUP BY time(15s) END;

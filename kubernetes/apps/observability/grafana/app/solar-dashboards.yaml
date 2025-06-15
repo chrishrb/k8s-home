@@ -5,6 +5,8 @@ metadata:
   name: solar-dashboards
   labels:
     grafana_dashboard: "1"
+  annotations:
+    k8s-sidecar-target-directory: /var/lib/grafana/dashboards/solar
 data:
   solar-day.json: |
     {

@@ -92,9 +92,6 @@ spec:
             orgId: 1
             type: file
 
-    dashboardsConfigMaps:
-      solar: "solar-dashboards"
-
     dashboards:
       default:
         cert-manager:
