@@ -10,187 +10,185 @@ metadata:
 data:
   solar-day.json: |
     {
-      "__inputs": [
-        {
-          "name": "VAR_PRICE",
-          "type": "constant",
-          "label": "Euro / kWh",
-          "value": "0.49",
-          "description": ""
-        }
-      ],
-      "__requires": [
-        {
-          "type": "panel",
-          "id": "gauge",
-          "name": "Gauge",
-          "version": ""
-        },
-        {
-          "type": "grafana",
-          "id": "grafana",
-          "name": "Grafana",
-          "version": "7.3.6"
-        },
-        {
-          "type": "panel",
-          "id": "graph",
-          "name": "Graph",
-          "version": ""
-        },
-        {
-          "type": "datasource",
-          "id": "influxdb",
-          "name": "InfluxDB",
-          "version": "1.0.0"
-        },
-        {
-          "type": "panel",
-          "id": "singlestat",
-          "name": "Singlestat",
-          "version": ""
-        },
-        {
-          "type": "panel",
-          "id": "stat",
-          "name": "Stat",
-          "version": ""
-        },
-        {
-          "type": "panel",
-          "id": "table-old",
-          "name": "Table (old)",
-          "version": ""
-        }
-      ],
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
       "editable": true,
-      "gnetId": null,
+      "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": null,
-      "iteration": 1615910690141,
+      "id": 29,
       "links": [],
       "panels": [
         {
-          "alert": {
-            "alertRuleTags": {},
-            "conditions": [
+          "datasource": {
+            "type": "influxdb",
+            "uid": "influxdb"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 100,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 0,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "normal"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "links": [],
+              "mappings": [],
+              "max": 7000,
+              "min": -7000,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "watt"
+            },
+            "overrides": [
               {
-                "evaluator": {
-                  "params": [],
-                  "type": "no_value"
+                "matcher": {
+                  "id": "byName",
+                  "options": "Verbrauch"
                 },
-                "operator": {
-                  "type": "and"
-                },
-                "query": {
-                  "params": [
-                    "A",
-                    "24h",
-                    "now"
-                  ]
-                },
-                "reducer": {
-                  "params": [],
-                  "type": "last"
-                },
-                "type": "query"
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "yellow",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
               },
               {
-                "evaluator": {
-                  "params": [],
-                  "type": "no_value"
+                "matcher": {
+                  "id": "byName",
+                  "options": "WR I"
                 },
-                "operator": {
-                  "type": "or"
-                },
-                "query": {
-                  "params": [
-                    "B",
-                    "24h",
-                    "now"
-                  ]
-                },
-                "reducer": {
-                  "params": [],
-                  "type": "last"
-                },
-                "type": "query"
-              }
-            ],
-            "executionErrorState": "alerting",
-            "for": "0m",
-            "frequency": "1d",
-            "handler": 1,
-            "message": "Ding Dong, der Wechselrichter ist vielleicht ausgefallen.",
-            "name": "Ausfallmeldung",
-            "noDataState": "alerting",
-            "notifications": [
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "rgb(199, 199, 199)",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
               {
-                "uid": "9BOuM_zRk"
+                "matcher": {
+                  "id": "byName",
+                  "options": "WR II"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "rgb(255, 255, 255)",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Verbrauch"
+                },
+                "properties": [
+                  {
+                    "id": "custom.stacking",
+                    "value": {
+                      "group": "A",
+                      "mode": "none"
+                    }
+                  }
+                ]
               }
             ]
           },
-          "aliasColors": {
-            "Verbrauch": "yellow",
-            "WR I": "rgb(199, 199, 199)",
-            "WR II": "rgb(255, 255, 255)"
-          },
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "InfluxDB",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": []
-            },
-            "overrides": []
-          },
-          "fill": 10,
-          "fillGradient": 0,
           "gridPos": {
             "h": 13,
             "w": 24,
             "x": 0,
             "y": 0
           },
-          "hiddenSeries": false,
           "id": 2,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 0,
-          "nullPointMode": "null",
           "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.3.6",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "$$hashKey": "object:242",
-              "alias": "Verbrauch",
-              "stack": false
+            "alertThreshold": true,
+            "legend": {
+              "calcs": [
+                "mean",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "multi",
+              "sort": "none"
             }
-          ],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
+          },
+          "pluginVersion": "11.6.1",
           "targets": [
             {
               "alias": "WR I",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [
                 {
                   "params": [
@@ -222,12 +220,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100140486"
+                  "value": "2001571623"
                 }
               ]
             },
             {
               "alias": "WR II",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [
                 {
                   "params": [
@@ -259,12 +261,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100142366"
+                  "value": "2001583426"
                 }
               ]
             },
             {
               "alias": "Verbrauch",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "electricity_15s",
               "orderByTime": "ASC",
@@ -292,54 +298,16 @@ data:
               "tags": []
             }
           ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
           "title": "Leistung AC",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:439",
-              "format": "watt",
-              "label": null,
-              "logBase": 1,
-              "max": "7000",
-              "min": "-7000",
-              "show": true
-            },
-            {
-              "$$hashKey": "object:440",
-              "format": "percent",
-              "label": null,
-              "logBase": 1,
-              "max": "100",
-              "min": "0",
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
+          "type": "timeseries"
         },
         {
-          "datasource": "InfluxDB",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "influxdb"
+          },
           "fieldConfig": {
             "defaults": {
-              "custom": {},
               "decimals": 2,
               "mappings": [],
               "max": 3500,
@@ -349,8 +317,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "rgb(255, 255, 255)",
-                    "value": null
+                    "color": "rgb(255, 255, 255)"
                   },
                   {
                     "color": "semi-dark-red",
@@ -373,8 +340,7 @@ data:
                       "mode": "absolute",
                       "steps": [
                         {
-                          "color": "yellow",
-                          "value": null
+                          "color": "yellow"
                         }
                       ]
                     }
@@ -392,6 +358,8 @@ data:
           "hideTimeOverride": true,
           "id": 7,
           "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
             "orientation": "auto",
             "reduceOptions": {
               "calcs": [
@@ -401,12 +369,17 @@ data:
               "values": true
             },
             "showThresholdLabels": false,
-            "showThresholdMarkers": true
+            "showThresholdMarkers": true,
+            "sizing": "auto"
           },
-          "pluginVersion": "7.3.6",
+          "pluginVersion": "11.6.1",
           "targets": [
             {
               "alias": "Verbrauch",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "electricity_1s",
               "orderByTime": "ASC",
@@ -431,6 +404,10 @@ data:
             },
             {
               "alias": "WR I",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -455,12 +432,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100140486"
+                  "value": "2001571623"
                 }
               ]
             },
             {
               "alias": "WR II",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -485,26 +466,105 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100142366"
+                  "value": "2001583426"
                 }
               ]
             }
           ],
           "timeFrom": "45s",
-          "timeShift": null,
           "title": "Letzte Leistung AC",
           "type": "gauge"
         },
         {
-          "columns": [],
-          "datasource": "InfluxDB",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "influxdb"
+          },
           "fieldConfig": {
             "defaults": {
-              "custom": {}
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
             },
-            "overrides": []
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Time"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Time"
+                  },
+                  {
+                    "id": "custom.hidden",
+                    "value": true
+                  },
+                  {
+                    "id": "custom.align"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "none"
+                  },
+                  {
+                    "id": "decimals",
+                    "value": 2
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Metric"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "short"
+                  },
+                  {
+                    "id": "decimals",
+                    "value": 2
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
           },
-          "fontSize": "100%",
           "gridPos": {
             "h": 10,
             "w": 5,
@@ -513,59 +573,26 @@ data:
           },
           "hideTimeOverride": true,
           "id": 4,
-          "pageSize": null,
-          "showHeader": true,
-          "sort": {
-            "col": 0,
-            "desc": true
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
           },
-          "styles": [
-            {
-              "alias": "Time",
-              "align": "auto",
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
-              "pattern": "Time",
-              "type": "hidden"
-            },
-            {
-              "alias": "",
-              "align": "left",
-              "colorMode": null,
-              "colors": [
-                "rgba(245, 54, 54, 0.9)",
-                "rgba(237, 129, 40, 0.89)",
-                "rgba(50, 172, 45, 0.97)"
-              ],
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
-              "decimals": 2,
-              "link": false,
-              "mappingType": 1,
-              "pattern": "Value",
-              "thresholds": [],
-              "type": "number",
-              "unit": "none"
-            },
-            {
-              "alias": "",
-              "align": "right",
-              "colorMode": null,
-              "colors": [
-                "rgba(245, 54, 54, 0.9)",
-                "rgba(237, 129, 40, 0.89)",
-                "rgba(50, 172, 45, 0.97)"
-              ],
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
-              "decimals": 2,
-              "mappingType": 1,
-              "pattern": "Metric",
-              "thresholds": [],
-              "type": "string",
-              "unit": "short"
-            }
-          ],
+          "pluginVersion": "11.6.1",
           "targets": [
             {
               "alias": "Fehler",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -590,12 +617,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100140486"
+                  "value": "2001571623"
                 }
               ]
             },
             {
               "alias": "Status",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -620,12 +651,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100140486"
+                  "value": "2001571623"
                 }
               ]
             },
             {
               "alias": "Netzfrequenz AC (Hz)",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -650,12 +685,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100140486"
+                  "value": "2001571623"
                 }
               ]
             },
             {
               "alias": "Spannung AC (V)",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -680,12 +719,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100140486"
+                  "value": "2001571623"
                 }
               ]
             },
             {
               "alias": "Spannung DC (V)",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -710,12 +753,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100140486"
+                  "value": "2001571623"
                 }
               ]
             },
             {
               "alias": "Leistung DC (W)",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -740,12 +787,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100140486"
+                  "value": "2001571623"
                 }
               ]
             },
             {
               "alias": "Betriebsdauer (h)",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -770,12 +821,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100140486"
+                  "value": "2001571623"
                 }
               ]
             },
             {
               "alias": "Gesamtleistung AC (kWh)",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -800,27 +855,105 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100140486"
+                  "value": "2001571623"
                 }
               ]
             }
           ],
           "timeFrom": "45s",
-          "timeShift": null,
           "title": "Letzte Statuswerte  (WR I)",
-          "transform": "timeseries_to_rows",
-          "type": "table-old"
+          "type": "table"
         },
         {
-          "columns": [],
-          "datasource": "InfluxDB",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "influxdb"
+          },
           "fieldConfig": {
             "defaults": {
-              "custom": {}
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
             },
-            "overrides": []
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Time"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Time"
+                  },
+                  {
+                    "id": "custom.hidden",
+                    "value": true
+                  },
+                  {
+                    "id": "custom.align"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "none"
+                  },
+                  {
+                    "id": "decimals",
+                    "value": 2
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Metric"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "short"
+                  },
+                  {
+                    "id": "decimals",
+                    "value": 2
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
           },
-          "fontSize": "100%",
           "gridPos": {
             "h": 10,
             "w": 5,
@@ -829,59 +962,26 @@ data:
           },
           "hideTimeOverride": true,
           "id": 5,
-          "pageSize": null,
-          "showHeader": true,
-          "sort": {
-            "col": 0,
-            "desc": true
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
           },
-          "styles": [
-            {
-              "alias": "Time",
-              "align": "auto",
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
-              "pattern": "Time",
-              "type": "hidden"
-            },
-            {
-              "alias": "",
-              "align": "left",
-              "colorMode": null,
-              "colors": [
-                "rgba(245, 54, 54, 0.9)",
-                "rgba(237, 129, 40, 0.89)",
-                "rgba(50, 172, 45, 0.97)"
-              ],
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
-              "decimals": 2,
-              "link": false,
-              "mappingType": 1,
-              "pattern": "Value",
-              "thresholds": [],
-              "type": "number",
-              "unit": "none"
-            },
-            {
-              "alias": "",
-              "align": "right",
-              "colorMode": null,
-              "colors": [
-                "rgba(245, 54, 54, 0.9)",
-                "rgba(237, 129, 40, 0.89)",
-                "rgba(50, 172, 45, 0.97)"
-              ],
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
-              "decimals": 2,
-              "mappingType": 1,
-              "pattern": "Metric",
-              "thresholds": [],
-              "type": "string",
-              "unit": "short"
-            }
-          ],
+          "pluginVersion": "11.6.1",
           "targets": [
             {
               "alias": "Fehler",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -906,12 +1006,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100142366"
+                  "value": "2001583426"
                 }
               ]
             },
             {
               "alias": "Status",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -936,12 +1040,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100142366"
+                  "value": "2001583426"
                 }
               ]
             },
             {
               "alias": "Netzfrequenz AC (Hz)",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -966,12 +1074,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100142366"
+                  "value": "2001583426"
                 }
               ]
             },
             {
               "alias": "Spannung AC (V)",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -996,12 +1108,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100142366"
+                  "value": "2001583426"
                 }
               ]
             },
             {
               "alias": "Spannung DC (V)",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -1026,12 +1142,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100142366"
+                  "value": "2001583426"
                 }
               ]
             },
             {
               "alias": "Leistung DC (W)",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -1056,12 +1176,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100142366"
+                  "value": "2001583426"
                 }
               ]
             },
             {
               "alias": "Betriebsdauer (h)",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -1086,12 +1210,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100142366"
+                  "value": "2001583426"
                 }
               ]
             },
             {
               "alias": "Gesamtleistung AC (kWh)",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_15s",
               "orderByTime": "ASC",
@@ -1116,32 +1244,28 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100142366"
+                  "value": "2001583426"
                 }
               ]
             }
           ],
           "timeFrom": "45s",
-          "timeShift": null,
           "title": "Letzte Statuswerte  (WR II)",
-          "transform": "timeseries_to_rows",
-          "type": "table-old"
+          "type": "table"
         },
         {
-          "datasource": "InfluxDB",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "influxdb"
+          },
           "fieldConfig": {
             "defaults": {
-              "custom": {
-                "align": null,
-                "filterable": false
-              },
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "rgb(255, 255, 255)",
-                    "value": null
+                    "color": "rgb(255, 255, 255)"
                   }
                 ]
               },
@@ -1177,6 +1301,7 @@ data:
             "graphMode": "area",
             "justifyMode": "auto",
             "orientation": "auto",
+            "percentChangeColorMode": "standard",
             "reduceOptions": {
               "calcs": [
                 "last"
@@ -1184,12 +1309,18 @@ data:
               "fields": "",
               "values": false
             },
-            "textMode": "value_and_name"
+            "showPercentChange": false,
+            "textMode": "value_and_name",
+            "wideLayout": true
           },
-          "pluginVersion": "7.3.6",
+          "pluginVersion": "11.6.1",
           "targets": [
             {
               "alias": "Verbrauch",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "electricity_5m",
               "orderByTime": "ASC",
@@ -1220,6 +1351,10 @@ data:
             },
             {
               "alias": "Einspeisung",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_5m",
               "orderByTime": "ASC",
@@ -1249,27 +1384,22 @@ data:
               "tags": []
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
           "title": "Tagesleistung",
-          "transformations": [],
           "type": "stat"
         },
         {
-          "datasource": "InfluxDB",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "influxdb"
+          },
           "fieldConfig": {
             "defaults": {
-              "custom": {
-                "align": null,
-                "filterable": false
-              },
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "red",
-                    "value": null
+                    "color": "red"
                   },
                   {
                     "color": "green",
@@ -1293,6 +1423,7 @@ data:
             "graphMode": "area",
             "justifyMode": "auto",
             "orientation": "auto",
+            "percentChangeColorMode": "standard",
             "reduceOptions": {
               "calcs": [
                 "last"
@@ -1300,12 +1431,18 @@ data:
               "fields": "",
               "values": false
             },
-            "textMode": "value_and_name"
+            "showPercentChange": false,
+            "textMode": "value_and_name",
+            "wideLayout": true
           },
-          "pluginVersion": "7.3.6",
+          "pluginVersion": "11.6.1",
           "targets": [
             {
               "alias": "Verbrauch",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [
                 {
                   "params": [
@@ -1354,6 +1491,10 @@ data:
             },
             {
               "alias": "Einspeisung",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [
                 {
                   "params": [
@@ -1402,8 +1543,6 @@ data:
               "tags": []
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
           "title": "Bilanz",
           "transformations": [
             {
@@ -1427,29 +1566,29 @@ data:
           "type": "stat"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": [
-            "rgb(255, 255, 255)",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": "InfluxDB",
-          "decimals": 2,
+          "datasource": {
+            "type": "influxdb",
+            "uid": "influxdb"
+          },
           "fieldConfig": {
             "defaults": {
-              "custom": {}
+              "decimals": 2,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "currencyEUR"
             },
             "overrides": []
-          },
-          "format": "currencyEUR",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
           },
           "gridPos": {
             "h": 4,
@@ -1458,44 +1597,31 @@ data:
             "y": 19
           },
           "id": 9,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
           "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false,
-            "ymax": null,
-            "ymin": null
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "mean"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "tableColumn": "",
+          "pluginVersion": "11.6.1",
           "targets": [
             {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_5m",
               "orderByTime": "ASC",
@@ -1525,42 +1651,34 @@ data:
               "tags": []
             }
           ],
-          "thresholds": "",
-          "timeFrom": null,
-          "timeShift": null,
           "title": "Ertrag",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [],
-          "valueName": "avg"
+          "type": "stat"
         }
       ],
+      "preload": false,
       "refresh": "5s",
-      "schemaVersion": 26,
-      "style": "dark",
+      "schemaVersion": 41,
       "tags": [],
       "templating": {
         "list": [
           {
             "current": {
-              "value": "${VAR_PRICE}",
-              "text": "${VAR_PRICE}",
-              "selected": false
+              "text": "",
+              "value": ""
             },
-            "error": null,
             "hide": 2,
             "label": "Euro / kWh",
             "name": "price",
+            "query": "",
+            "skipUrlSync": true,
+            "type": "constant",
             "options": [
               {
-                "value": "${VAR_PRICE}",
-                "text": "${VAR_PRICE}",
-                "selected": false
+                "selected": true,
+                "text": "",
+                "value": ""
               }
-            ],
-            "query": "${VAR_PRICE}",
-            "skipUrlSync": false,
-            "type": "constant"
+            ]
           }
         ]
       },
@@ -1568,149 +1686,267 @@ data:
         "from": "now/d",
         "to": "now/d"
       },
-      "timepicker": {
-        "refresh_intervals": [
-          "5s",
-          "10s",
-          "30s",
-          "1m",
-          "5m",
-          "15m",
-          "30m",
-          "1h",
-          "2h",
-          "1d"
-        ]
-      },
+      "timepicker": {},
       "timezone": "",
       "title": "Tagesansicht",
       "uid": "3UucuQzRz",
-      "version": 71
+      "version": 1
     }
   solar-month.json: |
     {
-      "__inputs": [
-        {
-          "name": "VAR_PRICE",
-          "type": "constant",
-          "label": "Euro / kWh",
-          "value": "0.49",
-          "description": ""
-        }
-      ],
-      "__requires": [
-        {
-          "type": "grafana",
-          "id": "grafana",
-          "name": "Grafana",
-          "version": "7.3.6"
-        },
-        {
-          "type": "panel",
-          "id": "graph",
-          "name": "Graph",
-          "version": ""
-        },
-        {
-          "type": "datasource",
-          "id": "influxdb",
-          "name": "InfluxDB",
-          "version": "1.0.0"
-        },
-        {
-          "type": "panel",
-          "id": "singlestat",
-          "name": "Singlestat",
-          "version": ""
-        },
-        {
-          "type": "panel",
-          "id": "stat",
-          "name": "Stat",
-          "version": ""
-        }
-      ],
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
       "editable": true,
-      "gnetId": null,
+      "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": null,
-      "iteration": 1615910745989,
+      "id": 30,
       "links": [],
       "panels": [
         {
-          "aliasColors": {
-            "Bewölkungsgrad": "dark-blue",
-            "Verbrauch": "yellow",
-            "WR I": "rgb(199, 199, 199)",
-            "WR II": "rgb(255, 255, 255)",
-            "electricity_5m.sum": "yellow"
+          "datasource": {
+            "type": "influxdb",
+            "uid": "influxdb"
           },
-          "bars": true,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "InfluxDB",
           "fieldConfig": {
             "defaults": {
-              "custom": {},
-              "links": []
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "bars",
+                "fillOpacity": 100,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "stepAfter",
+                "lineWidth": 3,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "normal"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "links": [],
+              "mappings": [],
+              "max": 50000,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "watth"
             },
-            "overrides": []
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Bewölkungsgrad"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-blue",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Verbrauch"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "yellow",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "WR I"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "rgb(199, 199, 199)",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "WR II"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "rgb(255, 255, 255)",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "electricity_5m.sum"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "yellow",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Bewölkungsgrad"
+                },
+                "properties": [
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "line"
+                  },
+                  {
+                    "id": "custom.showPoints",
+                    "value": "always"
+                  },
+                  {
+                    "id": "custom.stacking",
+                    "value": {
+                      "group": "A",
+                      "mode": "none"
+                    }
+                  },
+                  {
+                    "id": "unit",
+                    "value": "percent"
+                  },
+                  {
+                    "id": "max",
+                    "value": 100
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Verbrauch"
+                },
+                "properties": [
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "line"
+                  },
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "line"
+                  },
+                  {
+                    "id": "custom.stacking",
+                    "value": {
+                      "group": "A",
+                      "mode": "none"
+                    }
+                  }
+                ]
+              }
+            ]
           },
-          "fill": 0,
-          "fillGradient": 0,
           "gridPos": {
             "h": 19,
             "w": 24,
             "x": 0,
             "y": 0
           },
-          "hiddenSeries": false,
           "id": 2,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "total": true,
-            "values": true
-          },
-          "lines": false,
-          "linewidth": 3,
-          "nullPointMode": "null",
           "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.3.6",
-          "pointradius": 3,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "$$hashKey": "object:362",
-              "alias": "Bewölkungsgrad",
-              "bars": false,
-              "points": true,
-              "stack": false,
-              "yaxis": 2
+            "alertThreshold": true,
+            "legend": {
+              "calcs": [
+                "mean",
+                "max",
+                "min",
+                "sum"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
             },
-            {
-              "$$hashKey": "object:253",
-              "alias": "Verbrauch",
-              "bars": false,
-              "lines": true,
-              "stack": false
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "multi",
+              "sort": "none"
             }
-          ],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": true,
+          },
+          "pluginVersion": "11.6.1",
           "targets": [
             {
               "alias": "WR I",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [
                 {
                   "params": [
@@ -1748,12 +1984,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100140486"
+                  "value": "2001571623"
                 }
               ]
             },
             {
               "alias": "WR II",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [
                 {
                   "params": [
@@ -1791,12 +2031,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100142366"
+                  "value": "2001583426"
                 }
               ]
             },
             {
               "alias": "Verbrauch",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [
                 {
                   "params": [
@@ -1834,6 +2078,10 @@ data:
             },
             {
               "alias": "Bewölkungsgrad",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [
                 {
                   "params": [
@@ -1864,64 +2112,22 @@ data:
               "tags": []
             }
           ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
           "title": "Total AC",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:434",
-              "format": "watth",
-              "label": null,
-              "logBase": 1,
-              "max": "50000",
-              "min": "0",
-              "show": true
-            },
-            {
-              "$$hashKey": "object:435",
-              "format": "percent",
-              "label": "",
-              "logBase": 1,
-              "max": "100",
-              "min": "0",
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
+          "type": "timeseries"
         },
         {
-          "datasource": "InfluxDB",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "influxdb"
+          },
           "fieldConfig": {
             "defaults": {
-              "custom": {
-                "align": null,
-                "filterable": false
-              },
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "red",
-                    "value": null
+                    "color": "red"
                   },
                   {
                     "color": "green",
@@ -1945,6 +2151,7 @@ data:
             "graphMode": "area",
             "justifyMode": "auto",
             "orientation": "auto",
+            "percentChangeColorMode": "standard",
             "reduceOptions": {
               "calcs": [
                 "last"
@@ -1952,12 +2159,18 @@ data:
               "fields": "",
               "values": false
             },
-            "textMode": "value_and_name"
+            "showPercentChange": false,
+            "textMode": "value_and_name",
+            "wideLayout": true
           },
-          "pluginVersion": "7.3.6",
+          "pluginVersion": "11.6.1",
           "targets": [
             {
               "alias": "Verbrauch",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "electricity_1d",
               "orderByTime": "ASC",
@@ -1983,6 +2196,10 @@ data:
             },
             {
               "alias": "Einspeisung",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_1d",
               "orderByTime": "ASC",
@@ -2008,8 +2225,6 @@ data:
               "tags": []
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
           "title": "Bilanz",
           "transformations": [
             {
@@ -2033,29 +2248,29 @@ data:
           "type": "stat"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": [
-            "rgb(255, 255, 255)",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": "InfluxDB",
-          "decimals": 2,
+          "datasource": {
+            "type": "influxdb",
+            "uid": "influxdb"
+          },
           "fieldConfig": {
             "defaults": {
-              "custom": {}
+              "decimals": 2,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "currencyEUR"
             },
             "overrides": []
-          },
-          "format": "currencyEUR",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
           },
           "gridPos": {
             "h": 4,
@@ -2064,44 +2279,31 @@ data:
             "y": 19
           },
           "id": 4,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
           "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false,
-            "ymax": null,
-            "ymin": null
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "mean"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "tableColumn": "",
+          "pluginVersion": "11.6.1",
           "targets": [
             {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_5m",
               "orderByTime": "ASC",
@@ -2131,42 +2333,34 @@ data:
               "tags": []
             }
           ],
-          "thresholds": "",
-          "timeFrom": null,
-          "timeShift": null,
           "title": "Ertrag",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [],
-          "valueName": "avg"
+          "type": "stat"
         }
       ],
+      "preload": false,
       "refresh": "5s",
-      "schemaVersion": 26,
-      "style": "dark",
+      "schemaVersion": 41,
       "tags": [],
       "templating": {
         "list": [
           {
             "current": {
-              "value": "${VAR_PRICE}",
-              "text": "${VAR_PRICE}",
-              "selected": false
+              "text": "",
+              "value": ""
             },
-            "error": null,
             "hide": 2,
             "label": "Euro / kWh",
             "name": "price",
+            "query": "",
+            "skipUrlSync": true,
+            "type": "constant",
             "options": [
               {
-                "value": "${VAR_PRICE}",
-                "text": "${VAR_PRICE}",
-                "selected": false
+                "selected": true,
+                "text": "",
+                "value": ""
               }
-            ],
-            "query": "${VAR_PRICE}",
-            "skipUrlSync": false,
-            "type": "constant"
+            ]
           }
         ]
       },
@@ -2174,145 +2368,240 @@ data:
         "from": "now/M",
         "to": "now/M"
       },
-      "timepicker": {
-        "refresh_intervals": [
-          "5s",
-          "10s",
-          "30s",
-          "1m",
-          "5m",
-          "15m",
-          "30m",
-          "1h",
-          "2h",
-          "1d"
-        ]
-      },
+      "timepicker": {},
       "timezone": "",
       "title": "Monatsansicht",
       "uid": "x_w6qzmgk",
-      "version": 14
+      "version": 1
     }
   solar-year.json: |
     {
-      "__inputs": [
-        {
-          "name": "VAR_PRICE",
-          "type": "constant",
-          "label": "Euro / kWh",
-          "value": "0.49",
-          "description": ""
-        }
-      ],
-      "__requires": [
-        {
-          "type": "grafana",
-          "id": "grafana",
-          "name": "Grafana",
-          "version": "7.3.6"
-        },
-        {
-          "type": "panel",
-          "id": "graph",
-          "name": "Graph",
-          "version": ""
-        },
-        {
-          "type": "datasource",
-          "id": "influxdb",
-          "name": "InfluxDB",
-          "version": "1.0.0"
-        },
-        {
-          "type": "panel",
-          "id": "singlestat",
-          "name": "Singlestat",
-          "version": ""
-        },
-        {
-          "type": "panel",
-          "id": "stat",
-          "name": "Stat",
-          "version": ""
-        }
-      ],
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
       "editable": true,
-      "gnetId": null,
+      "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": null,
-      "iteration": 1615910761235,
+      "id": 31,
       "links": [],
       "panels": [
         {
-          "aliasColors": {
-            "Einspeisung": "rgb(255, 255, 255)",
-            "Einspeisung Total": "rgb(255, 255, 255)",
-            "Verbrauch": "yellow",
-            "WR I": "dark-red",
-            "WR II": "dark-green"
+          "datasource": {
+            "type": "influxdb",
+            "uid": "influxdb"
           },
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "InfluxDB",
           "fieldConfig": {
             "defaults": {
-              "custom": {},
-              "links": []
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Ø kWh / Tag",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "stepAfter",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "links": [],
+              "mappings": [],
+              "max": 40,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "kwatth"
             },
-            "overrides": []
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Einspeisung"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "rgb(255, 255, 255)",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Einspeisung Total"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "rgb(255, 255, 255)",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Verbrauch"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "yellow",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "WR I"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "WR II"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-green",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Verbrauch"
+                },
+                "properties": [
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 2
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Einspeisung Total"
+                },
+                "properties": [
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 0
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
           },
-          "fill": 1,
-          "fillGradient": 0,
           "gridPos": {
             "h": 19,
             "w": 24,
             "x": 0,
             "y": 0
           },
-          "hiddenSeries": false,
           "id": 2,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null",
           "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.3.6",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "$$hashKey": "object:228",
-              "alias": "Verbrauch",
-              "fill": 0,
-              "linewidth": 2
+            "alertThreshold": true,
+            "legend": {
+              "calcs": [
+                "mean",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
             },
-            {
-              "$$hashKey": "object:500",
-              "alias": "Einspeisung Total",
-              "fill": 0,
-              "linewidth": 2
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "multi",
+              "sort": "none"
             }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": true,
+          },
+          "pluginVersion": "11.6.1",
           "targets": [
             {
               "alias": "WR I",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [
                 {
                   "params": [
@@ -2344,12 +2633,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100140486"
+                  "value": "2001571623"
                 }
               ]
             },
             {
               "alias": "WR II",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [
                 {
                   "params": [
@@ -2381,12 +2674,16 @@ data:
                 {
                   "key": "sn",
                   "operator": "=",
-                  "value": "1100142366"
+                  "value": "2001583426"
                 }
               ]
             },
             {
               "alias": "Verbrauch",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [
                 {
                   "params": [
@@ -2417,16 +2714,7 @@ data:
               "tags": []
             }
           ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
           "title": "Leistung AC / 14-Tage-Durchschnitt",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
           "transformations": [
             {
               "id": "calculateField",
@@ -2443,54 +2731,21 @@ data:
               }
             }
           ],
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:279",
-              "format": "kwatth",
-              "label": "Ø kWh / Tag",
-              "logBase": 1,
-              "max": "40",
-              "min": "0",
-              "show": true
-            },
-            {
-              "$$hashKey": "object:280",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
+          "type": "timeseries"
         },
         {
-          "datasource": "InfluxDB",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "influxdb"
+          },
           "fieldConfig": {
             "defaults": {
-              "custom": {
-                "align": null,
-                "filterable": false
-              },
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "red",
-                    "value": null
+                    "color": "red"
                   },
                   {
                     "color": "green",
@@ -2514,6 +2769,7 @@ data:
             "graphMode": "area",
             "justifyMode": "auto",
             "orientation": "auto",
+            "percentChangeColorMode": "standard",
             "reduceOptions": {
               "calcs": [
                 "last"
@@ -2521,12 +2777,18 @@ data:
               "fields": "",
               "values": false
             },
-            "textMode": "value_and_name"
+            "showPercentChange": false,
+            "textMode": "value_and_name",
+            "wideLayout": true
           },
-          "pluginVersion": "7.3.6",
+          "pluginVersion": "11.6.1",
           "targets": [
             {
               "alias": "Verbrauch",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "electricity_1d",
               "orderByTime": "ASC",
@@ -2552,6 +2814,10 @@ data:
             },
             {
               "alias": "Einspeisung",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_1d",
               "orderByTime": "ASC",
@@ -2577,8 +2843,6 @@ data:
               "tags": []
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
           "title": "Bilanz",
           "transformations": [
             {
@@ -2602,29 +2866,29 @@ data:
           "type": "stat"
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": [
-            "rgb(255, 255, 255)",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": "InfluxDB",
-          "decimals": 2,
+          "datasource": {
+            "type": "influxdb",
+            "uid": "influxdb"
+          },
           "fieldConfig": {
             "defaults": {
-              "custom": {}
+              "decimals": 2,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "currencyEUR"
             },
             "overrides": []
-          },
-          "format": "currencyEUR",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
           },
           "gridPos": {
             "h": 4,
@@ -2633,44 +2897,31 @@ data:
             "y": 19
           },
           "id": 4,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
           "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false,
-            "ymax": null,
-            "ymin": null
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "mean"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
           },
-          "tableColumn": "",
+          "pluginVersion": "11.6.1",
           "targets": [
             {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "influxdb"
+              },
               "groupBy": [],
               "measurement": "solar_1d",
               "orderByTime": "ASC",
@@ -2700,41 +2951,33 @@ data:
               "tags": []
             }
           ],
-          "thresholds": "",
-          "timeFrom": null,
-          "timeShift": null,
           "title": "Ertrag",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [],
-          "valueName": "avg"
+          "type": "stat"
         }
       ],
-      "schemaVersion": 26,
-      "style": "dark",
+      "preload": false,
+      "schemaVersion": 41,
       "tags": [],
       "templating": {
         "list": [
           {
             "current": {
-              "value": "${VAR_PRICE}",
-              "text": "${VAR_PRICE}",
-              "selected": false
+              "text": "",
+              "value": ""
             },
-            "error": null,
             "hide": 2,
             "label": "Euro / kWh",
             "name": "price",
+            "query": "",
+            "skipUrlSync": true,
+            "type": "constant",
             "options": [
               {
-                "value": "${VAR_PRICE}",
-                "text": "${VAR_PRICE}",
-                "selected": false
+                "selected": true,
+                "text": "",
+                "value": ""
               }
-            ],
-            "query": "${VAR_PRICE}",
-            "skipUrlSync": false,
-            "type": "constant"
+            ]
           }
         ]
       },
@@ -2742,22 +2985,9 @@ data:
         "from": "now/y",
         "to": "now/y"
       },
-      "timepicker": {
-        "refresh_intervals": [
-          "5s",
-          "10s",
-          "30s",
-          "1m",
-          "5m",
-          "15m",
-          "30m",
-          "1h",
-          "2h",
-          "1d"
-        ]
-      },
+      "timepicker": {},
       "timezone": "",
       "title": "Jahresansicht",
       "uid": "c0-5Z8zRk",
-      "version": 10
+      "version": 1
     }
