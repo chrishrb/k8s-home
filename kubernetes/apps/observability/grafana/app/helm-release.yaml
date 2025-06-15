@@ -92,6 +92,9 @@ spec:
             orgId: 1
             type: file
 
+    dashboardsConfigMaps:
+      solar: "solar-dashboards"
+
     dashboards:
       default:
         cert-manager:
@@ -200,9 +203,6 @@ spec:
         nginx-request-handling-performance:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
           datasource: Prometheus
-
-    dashboardsConfigMaps:
-      solar: "solar-dashboards"
 
     datasources:
       datasources.yaml:
