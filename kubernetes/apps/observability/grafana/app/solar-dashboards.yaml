@@ -5,20 +5,10 @@ metadata:
   name: solar-dashboards
   labels:
     grafana_dashboard: "1"
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
 data:
   solar-day.json: |
     {
       "__inputs": [
-        {
-          "name": "DS_INFLUXDB",
-          "label": "InfluxDB",
-          "description": "",
-          "type": "datasource",
-          "pluginId": "influxdb",
-          "pluginName": "InfluxDB"
-        },
         {
           "name": "VAR_PRICE",
           "type": "constant",
@@ -71,19 +61,6 @@ data:
           "version": ""
         }
       ],
-      "annotations": {
-        "list": [
-          {
-            "builtIn": 1,
-            "datasource": "-- Grafana --",
-            "enable": true,
-            "hide": true,
-            "iconColor": "rgba(0, 211, 255, 1)",
-            "name": "Annotations & Alerts",
-            "type": "dashboard"
-          }
-        ]
-      },
       "editable": true,
       "gnetId": null,
       "graphTooltip": 0,
@@ -159,7 +136,7 @@ data:
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_INFLUXDB}",
+          "datasource": "InfluxDB",
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -357,7 +334,7 @@ data:
           }
         },
         {
-          "datasource": "${DS_INFLUXDB}",
+          "datasource": "InfluxDB",
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -518,7 +495,7 @@ data:
         },
         {
           "columns": [],
-          "datasource": "${DS_INFLUXDB}",
+          "datasource": "InfluxDB",
           "fieldConfig": {
             "defaults": {
               "custom": {}
@@ -834,7 +811,7 @@ data:
         },
         {
           "columns": [],
-          "datasource": "${DS_INFLUXDB}",
+          "datasource": "InfluxDB",
           "fieldConfig": {
             "defaults": {
               "custom": {}
@@ -1149,7 +1126,7 @@ data:
           "type": "table-old"
         },
         {
-          "datasource": "${DS_INFLUXDB}",
+          "datasource": "InfluxDB",
           "fieldConfig": {
             "defaults": {
               "custom": {
@@ -1277,7 +1254,7 @@ data:
           "type": "stat"
         },
         {
-          "datasource": "${DS_INFLUXDB}",
+          "datasource": "InfluxDB",
           "fieldConfig": {
             "defaults": {
               "custom": {
@@ -1456,7 +1433,7 @@ data:
             "rgba(237, 129, 40, 0.89)",
             "#d44a3a"
           ],
-          "datasource": "${DS_INFLUXDB}",
+          "datasource": "InfluxDB",
           "decimals": 2,
           "fieldConfig": {
             "defaults": {
@@ -1612,14 +1589,6 @@ data:
     {
       "__inputs": [
         {
-          "name": "DS_INFLUXDB",
-          "label": "InfluxDB",
-          "description": "",
-          "type": "datasource",
-          "pluginId": "influxdb",
-          "pluginName": "InfluxDB"
-        },
-        {
           "name": "VAR_PRICE",
           "type": "constant",
           "label": "Euro / kWh",
@@ -1659,19 +1628,6 @@ data:
           "version": ""
         }
       ],
-      "annotations": {
-        "list": [
-          {
-            "$$hashKey": "object:303",
-            "builtIn": 1,
-            "datasource": "-- Grafana --",
-            "enable": true,
-            "hide": true,
-            "iconColor": "rgba(0, 211, 255, 1)",
-            "name": "Annotations & Alerts",
-            "type": "dashboard"
-          }
-        ]
       },
       "editable": true,
       "gnetId": null,
@@ -1691,7 +1647,7 @@ data:
           "bars": true,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_INFLUXDB}",
+          "datasource": "InfluxDB",
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -1951,7 +1907,7 @@ data:
           }
         },
         {
-          "datasource": "${DS_INFLUXDB}",
+          "datasource": "InfluxDB",
           "fieldConfig": {
             "defaults": {
               "custom": {
@@ -2084,7 +2040,7 @@ data:
             "rgba(237, 129, 40, 0.89)",
             "#d44a3a"
           ],
-          "datasource": "${DS_INFLUXDB}",
+          "datasource": "InfluxDB",
           "decimals": 2,
           "fieldConfig": {
             "defaults": {
@@ -2287,19 +2243,6 @@ data:
           "version": ""
         }
       ],
-      "annotations": {
-        "list": [
-          {
-            "$$hashKey": "object:160",
-            "builtIn": 1,
-            "datasource": "-- Grafana --",
-            "enable": true,
-            "hide": true,
-            "iconColor": "rgba(0, 211, 255, 1)",
-            "name": "Annotations & Alerts",
-            "type": "dashboard"
-          }
-        ]
       },
       "editable": true,
       "gnetId": null,
@@ -2319,7 +2262,7 @@ data:
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_INFLUXDB}",
+          "datasource": "InfluxDB",
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -2542,7 +2485,7 @@ data:
           }
         },
         {
-          "datasource": "${DS_INFLUXDB}",
+          "datasource": "InfluxDB",
           "fieldConfig": {
             "defaults": {
               "custom": {
@@ -2675,7 +2618,7 @@ data:
             "rgba(237, 129, 40, 0.89)",
             "#d44a3a"
           ],
-          "datasource": "${DS_INFLUXDB}",
+          "datasource": "InfluxDB",
           "decimals": 2,
           "fieldConfig": {
             "defaults": {

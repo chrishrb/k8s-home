@@ -78,7 +78,7 @@ spec:
           - name: kubernetes
             disableDeletion: false
             editable: true
-            folder: "Kubernetes"
+            folder: Kubernetes
             options:
               path: /var/lib/grafana/dashboards/kubernetes
             orgId: 1
@@ -86,7 +86,7 @@ spec:
           - name: solar
             disableDeletion: false
             editable: true
-            folder: "Solar"
+            folder: Solar
             options:
               path: /var/lib/grafana/dashboards/solar
             orgId: 1
