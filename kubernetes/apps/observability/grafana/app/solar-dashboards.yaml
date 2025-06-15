@@ -1677,7 +1677,7 @@ data:
               {
                 "selected": true,
                 "text": "",
-                "value": ""
+                "value": "0.30"
               }
             ]
           }
@@ -2359,7 +2359,7 @@ data:
               {
                 "selected": true,
                 "text": "",
-                "value": ""
+                "value": "0.30"
               }
             ]
           }
@@ -2976,7 +2976,7 @@ data:
               {
                 "selected": true,
                 "text": "",
-                "value": ""
+                "value": "0.30"
               }
             ]
           }
