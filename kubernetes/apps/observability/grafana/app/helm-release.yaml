@@ -300,7 +300,8 @@ spec:
             - *host
 
     persistence:
-      enabled: false
+      enabled: true
+      storageClassName: openebs-hostpath
 
     plugins:
       - grafana-clock-panel
