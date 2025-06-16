@@ -863,6 +863,12 @@ data:
           ],
           "timeFrom": "45s",
           "title": "Letzte Statuswerte  (WR I)",
+          "transformations": [
+            {
+              "id": "seriesToRows",
+              "options": {}
+            }
+          ],
           "type": "table"
         },
         {
@@ -1252,6 +1258,12 @@ data:
           ],
           "timeFrom": "45s",
           "title": "Letzte Statuswerte  (WR II)",
+          "transformations": [
+            {
+              "id": "seriesToRows",
+              "options": {}
+            }
+          ],
           "type": "table"
         },
         {
