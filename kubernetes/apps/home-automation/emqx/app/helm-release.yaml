@@ -31,7 +31,7 @@ spec:
 
     image:
       repository: ghcr.io/emqx/emqx-operator
-      tag: 2.2.29
+      tag: 2.3.0
 
     resources:
       limits:
