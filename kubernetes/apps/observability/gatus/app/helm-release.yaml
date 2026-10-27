@@ -90,7 +90,7 @@ spec:
               FOLDER: /config
               LABEL: gatus.io/enabled
               NAMESPACE: ALL
-              RESOURCE: both
+              RESOURCE: configmap
               UNIQUE_FILENAMES: true
               METHOD: SLEEP
             resources: *resources
