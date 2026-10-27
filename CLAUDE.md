@@ -25,7 +25,7 @@ GitOps repo for a home Kubernetes cluster: Talos Linux nodes, with Flux v2 recon
 
 - HelmReleases use `helm.toolkit.fluxcd.io/v2`, `interval: 30m`, and remediation `retries: 3`. HelmRepositories live in `flux-system`.
 - Generic apps use the bjw-s `app-template` chart.
-- Ingress: `ingressClassName: nginx`, host `<sub>.${BASE_PATH}`, `cert-manager.io/cluster-issuer: letsencrypt-prod`.
+- Exposure: an `HTTPRoute` (see `kubernetes/apps/observability/grafana/app/httproute.yaml`) attached to its own `https-<app>` listener on the `external` Gateway in `kubernetes/apps/networking/gateway/app/gateway.yaml`, host `<sub>.${BASE_PATH}`. Adding a host means adding a listener there; cert-manager issues its certificate. No Ingress/ingress-nginx.
 - Postgres: ext-postgres-operator `Postgres` + `PostgresUser` against the CloudNativePG cluster (`dependsOn: postgres-cluster`).
 - Storage: `openebs-hostpath`. Apps own their PVC in `app/pvc.yaml` (with `kustomize.toolkit.fluxcd.io/prune: disabled`). There are no PVC backups at the moment (volsync was removed).
 - Commit messages follow Conventional Commits (`feat(app): …`, `fix(helm): …`). Renovate manages version bumps.

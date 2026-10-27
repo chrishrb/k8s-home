@@ -10,7 +10,6 @@ resources:
   - ./ext-postgres-operator-charts.yaml
   - ./external-secrets-charts.yaml
   - ./grafana-charts.yaml
-  - ./ingress-nginx.yaml
   - ./jetstack.yaml
   - ./metrics-server.yaml
   - ./openebs.yaml
