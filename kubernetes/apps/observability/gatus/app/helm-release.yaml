@@ -112,23 +112,6 @@ spec:
             interval: 1m
             scrapeTimeout: 10s
 
-    ingress:
-      main:
-        className: nginx
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-prod"
-        hosts:
-          - host: &host status.${BASE_PATH}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - secretName: gatus-cherb-de-tls
-            hosts:
-              - *host
-
     serviceAccount:
       create: true
       name: gatus

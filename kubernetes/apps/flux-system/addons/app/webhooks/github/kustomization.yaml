@@ -5,4 +5,4 @@ resources:
   - ./secret.sops.yaml
   - ./receiver.yaml
   - ./service.yaml
-  - ./ingress.yaml
+  - ./httproute.yaml

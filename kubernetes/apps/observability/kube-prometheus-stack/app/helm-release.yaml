@@ -105,19 +105,6 @@ spec:
     ### Prometheus instance values
     ###
     prometheus:
-      ingress:
-        enabled: false
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-prod"
-        ingressClassName: nginx
-        hosts:
-          - &host "prometheus.${BASE_PATH}"
-        pathType: Prefix
-        tls:
-          - secretName: prometheus-cherb-de-tls
-            hosts:
-              - *host
-
       prometheusSpec:
         enableAdminAPI: false
         enableFeatures:
