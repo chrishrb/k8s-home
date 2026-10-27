@@ -52,12 +52,24 @@ spec:
                     key: POSTGRES_URL
 
             probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: 8123
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness: *probes
               startup:
-                enabled: false
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: 8123
+                  periodSeconds: 10
+                  failureThreshold: 60 # allow up to 10 minutes for startup and DB migrations
 
             resources:
               requests:
