@@ -25,3 +25,5 @@ wiki
 # Bootstrap
 /config.yaml
 .direnv
+# Claude Code
+.claude/settings.local.json
