@@ -21,6 +21,11 @@ spec:
     remediation:
       retries: 3
   values:
+    # Loki/Alloy are only for Mayastor logs; cluster logs go to observability/loki.
+    loki:
+      enabled: false
+    alloy:
+      enabled: false
     engines:
       local:
         lvm:
