@@ -22,7 +22,7 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@d482da0e602890d3160aade42e72c8556103bf04 # master
 
       - name: Setup Workflow Tools
-        run: brew install fluxcd/tap/flux kubeconform kustomize
+        run: brew install fluxcd/tap/flux kubeconform kustomize yq
 
       - name: Run kubeconform
         shell: bash

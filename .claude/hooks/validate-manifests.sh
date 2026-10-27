@@ -44,6 +44,12 @@ if ! build=$(kustomize build "${dir}" --load-restrictor=LoadRestrictionsNone 2>&
     exit 2
 fi
 
+# Substitute the plaintext cluster settings like Flux does (see scripts/kubeconform.sh).
+settings_file="${root}/kubernetes/flux/vars/cluster-settings.yaml"
+if [[ -f "${settings_file}" ]] && command -v yq >/dev/null 2>&1; then
+    build=$(sed -e "$(yq -r '.data | to_entries | map("s|\\${" + .key + "}|" + .value + "|g") | join(";")' "${settings_file}")" <<<"${build}")
+fi
+
 if ! result=$(kubeconform "${kubeconform_args[@]}" <<<"${build}" 2>&1); then
     echo "kubeconform failed for ${dir#"${root}"/}:" >&2
     echo "${result}" >&2
