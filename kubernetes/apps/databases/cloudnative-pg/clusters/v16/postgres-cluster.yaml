@@ -16,6 +16,13 @@ spec:
   monitoring:
     enablePodMonitor: true
 
+  # WAL archiving and base backups to S3 (see backup.yaml)
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: postgres16-s3
+
   resources:
     requests:
       cpu: 500m
