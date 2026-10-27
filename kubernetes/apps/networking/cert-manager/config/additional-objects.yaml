@@ -12,11 +12,15 @@ spec:
     # Name of a secret used to store the ACME account private key
     privateKeySecretRef:
       name: letsencrypt-staging
-    # Enable the HTTP-01 challenge provider
+    # HTTP-01 challenges are answered through the external Gateway
     solvers:
       - http01:
-          ingress:
-            ingressClassName: nginx
+          gatewayHTTPRoute:
+            parentRefs:
+              - kind: Gateway
+                name: external
+                namespace: networking
+                sectionName: http
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -31,8 +35,12 @@ spec:
     # Name of a secret used to store the ACME account private key
     privateKeySecretRef:
       name: letsencrypt-prod
-    # Enable the HTTP-01 challenge provider
+    # HTTP-01 challenges are answered through the external Gateway
     solvers:
       - http01:
-          ingress:
-            ingressClassName: nginx
+          gatewayHTTPRoute:
+            parentRefs:
+              - kind: Gateway
+                name: external
+                namespace: networking
+                sectionName: http
