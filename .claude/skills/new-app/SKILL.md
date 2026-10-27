@@ -35,7 +35,7 @@ Templates are in `${CLAUDE_SKILL_DIR}/templates/`. Copy them and replace the `<P
    - Secrets always come from Bitwarden through the `bitwarden-secretsmanager` ClusterSecretStore. Never put plaintext secrets in git, and never create new `*.sops.yaml` files for app secrets. Leave `<BITWARDEN_SECRET_UUID>` as a placeholder and tell the user to fill it in.
    - Databases use the ext-postgres-operator `Postgres` + `PostgresUser` pair (`database.yaml` template). It creates a secret called `database`.
    - Ingress hosts use `${BASE_PATH}`, `ingressClassName: nginx` and `cert-manager.io/cluster-issuer: "letsencrypt-prod"`.
-   - Optional components: `../../../../tmpl/volsync` (PVC + restic backup, needs `VOLSYNC_CAPACITY`) and `../../../../tmpl/gatus/{external,internal}` (uptime check).
+   - Optional components: `../../../../tmpl/volsync` (PVC + restic backup, needs `VOLSYNC_CAPACITY`) and `../../../../tmpl/gatus/external` (uptime check).
 5. **Register the app.** Add `- ./<app>/ks.yaml` to `kubernetes/apps/<namespace>/kustomization.yaml`.
 6. **Validate.** Run `kustomize build kubernetes/apps/<namespace>/<app>/app --load-restrictor=LoadRestrictionsNone | kubeconform -strict -ignore-missing-schemas -skip Secret,ExternalSecret -schema-location default -schema-location 'https://kubernetes-schemas.pages.dev/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'`. You can also run `task kubernetes:kubeconform` for the whole tree.
 7. **Report back.** List the files you created and any placeholders still left (Bitwarden UUID, values to review). Don't commit, push or `kubectl apply`. Flux deploys the app once the user merges.

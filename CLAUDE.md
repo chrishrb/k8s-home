@@ -16,7 +16,7 @@ GitOps repo for a home Kubernetes cluster: Talos Linux nodes, with Flux v2 recon
 - `kubernetes/apps/<namespace>/<app>/ks.yaml`: the Flux Kustomization (in `flux-system`, with the `substitution.flux.home.arpa/enabled: "true"` label). It points at `./app`.
 - `kubernetes/apps/<namespace>/<app>/app/`: `kustomization.yaml`, `helm-release.yaml`, plus `external-secret.yaml` / `database.yaml` if needed.
 - `kubernetes/apps/<namespace>/kustomization.yaml`: lists `namespace.yaml` and each `./<app>/ks.yaml`.
-- `kubernetes/tmpl/{volsync,gatus}`: reusable components, configured through `postBuild.substitute` (`APP`, `VOLSYNC_*`, `GATUS_SUBDOMAIN`).
+- `kubernetes/tmpl/{volsync,gatus/external}`: reusable components, configured through `postBuild.substitute` (`APP`, `VOLSYNC_*`, `GATUS_SUBDOMAIN`).
 - `kubernetes/flux/`: Flux config, Helm/OCI/Git repositories, and cluster vars (`cluster-settings`, encrypted `cluster-secrets` holding e.g. `BASE_PATH`).
 - `kubernetes/bootstrap/`: Talos (talhelper) and the initial Flux/helmfile bootstrap.
 - `bootstrap/templates/`: makejinja templates from the upstream cluster-template. Not used for day-to-day changes.
