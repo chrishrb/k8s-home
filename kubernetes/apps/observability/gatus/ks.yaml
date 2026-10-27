@@ -17,6 +17,7 @@ spec:
     name: home-kubernetes
   dependsOn:
     - name: postgres-cluster
+    - name: ext-postgres-operator
     - name: external-secrets
   prune: true
   wait: true

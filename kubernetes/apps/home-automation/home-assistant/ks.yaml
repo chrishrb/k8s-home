@@ -19,6 +19,8 @@ spec:
     - name: openebs
     - name: emqx-cluster
     - name: postgres-cluster
+    - name: ext-postgres-operator
+    - name: volsync
   postBuild:
     substitute:
       APP: *app
