@@ -1,0 +1,62 @@
+# Ingress firewall: block by default, allow only what must be reachable.
+# NOTE: Cilium (kube-proxy replacement) handles LoadBalancer/NodePort/hostPort
+# traffic in eBPF before nftables, so those are restricted with CiliumNetworkPolicies.
+apiVersion: v1alpha1
+kind: NetworkDefaultActionConfig
+ingress: block
+---
+apiVersion: v1alpha1
+kind: NetworkRuleConfig
+name: apid-ingress
+portSelector:
+  ports:
+    - 50000
+  protocol: tcp
+ingress:
+  - subnet: 0.0.0.0/0
+---
+apiVersion: v1alpha1
+kind: NetworkRuleConfig
+name: kube-apiserver-ingress
+portSelector:
+  ports:
+    - 6443
+  protocol: tcp
+ingress:
+  - subnet: 0.0.0.0/0
+---
+apiVersion: v1alpha1
+kind: NetworkRuleConfig
+name: public-tcp-ingress
+portSelector:
+  ports:
+    - 80
+    - 443
+    - 1883
+    - 8883
+  protocol: tcp
+ingress:
+  - subnet: 0.0.0.0/0
+---
+# Pods reach host services: hostDNS, apiserver, metrics (etcd, kcm, scheduler, kubelet, cilium)
+apiVersion: v1alpha1
+kind: NetworkRuleConfig
+name: cluster-tcp-ingress
+portSelector:
+  ports:
+    - 1-65535
+  protocol: tcp
+ingress:
+  - subnet: 10.244.0.0/16
+  - subnet: 184.174.36.58/32
+---
+apiVersion: v1alpha1
+kind: NetworkRuleConfig
+name: cluster-udp-ingress
+portSelector:
+  ports:
+    - 1-65535
+  protocol: udp
+ingress:
+  - subnet: 10.244.0.0/16
+  - subnet: 184.174.36.58/32

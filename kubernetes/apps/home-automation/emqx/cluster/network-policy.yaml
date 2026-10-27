@@ -1,0 +1,24 @@
+---
+# Only MQTT (1883) and MQTT/TLS (8883) are public; everything else is in-cluster only.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: emqx
+spec:
+  endpointSelector:
+    matchLabels:
+      apps.emqx.io/instance: emqx
+  ingress:
+    - fromEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: "1883"
+              protocol: TCP
+            - port: "8883"
+              protocol: TCP
+    - fromEntities:
+        - cluster
+        - host
+        - remote-node
+        - ingress

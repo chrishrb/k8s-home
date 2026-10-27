@@ -5,4 +5,5 @@ resources:
   - ./cluster.yaml
   - ./httproute.yaml
   - ./pod-monitor.yaml
+  - ./network-policy.yaml
   - ../../../../tmpl/gatus/external
