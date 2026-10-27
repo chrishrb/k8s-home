@@ -3,9 +3,8 @@
 ## Core Components
 
 - [cert-manager](https://github.com/cert-manager/cert-manager): Creates SSL certificates for services in my cluster.
-- [cilium](https://github.com/cilium/cilium): Internal Kubernetes container networking interface.
+- [cilium](https://github.com/cilium/cilium): Internal Kubernetes container networking interface, and the [Gateway API](https://gateway-api.sigs.k8s.io/) implementation that exposes services.
 - [external-secrets](https://github.com/external-secrets/external-secrets): Managed Kubernetes secrets using [bitwarden secrets manager](https://external-secrets.io/latest/provider/bitwarden-secrets-manager/).
-- [ingress-nginx](https://github.com/kubernetes/ingress-nginx): Kubernetes ingress controller using NGINX as a reverse proxy and load balancer.
 - [sops](https://github.com/getsops/sops): Managed secrets for Kubernetes and Terraform which are commited to Git.
 - [spegel](https://github.com/spegel-org/spegel): Stateless cluster local OCI registry mirror.
 
