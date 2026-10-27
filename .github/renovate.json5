@@ -57,6 +57,21 @@
   packageRules: [
     {
       description: [
+        'Postgres major upgrades need pg_upgrade or a new cluster',
+      ],
+      matchPackageNames: [
+        '/postgres/',
+      ],
+      matchDatasources: [
+        'docker',
+      ],
+      matchUpdateTypes: [
+        'major',
+      ],
+      enabled: false,
+    },
+    {
+      description: [
         'Auto merge Github Actions',
       ],
       matchManagers: [
@@ -309,6 +324,19 @@
     },
   ],
   customManagers: [
+    {
+      customType: 'regex',
+      description: [
+        'Process CloudNativePG cluster images',
+      ],
+      fileMatch: [
+        '(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$',
+      ],
+      matchStrings: [
+        'imageName: (?<depName>[^\\s:]+):(?<currentValue>[^\\s@]+)',
+      ],
+      datasourceTemplate: 'docker',
+    },
     {
       customType: 'regex',
       description: [
