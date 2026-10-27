@@ -1,0 +1,96 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.networking.k8s.io/gateway_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: external
+  annotations:
+    # cert-manager creates a Certificate for every HTTPS listener below
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  gatewayClassName: cilium
+  infrastructure:
+    annotations:
+      # Shares the node's public IP with the EMQX listeners
+      lbipam.cilium.io/ips: "184.174.36.58"
+      lbipam.cilium.io/sharing-key: default
+      lbipam.cilium.io/sharing-cross-namespace: "*"
+  listeners:
+    # Plain HTTP only serves ACME challenges and redirects to HTTPS
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: Same
+    # One listener per hostname; each only accepts routes from its app's namespace
+    - name: https-grafana
+      protocol: HTTPS
+      port: 443
+      hostname: "grafana.${BASE_PATH}"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: grafana-tls
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: observability
+    - name: https-gatus
+      protocol: HTTPS
+      port: 443
+      hostname: "status.${BASE_PATH}"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: gatus-tls
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: observability
+    - name: https-home-assistant
+      protocol: HTTPS
+      port: 443
+      hostname: "hass.${BASE_PATH}"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: home-assistant-tls
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: home-automation
+    - name: https-emqx
+      protocol: HTTPS
+      port: 443
+      hostname: "emqx.${BASE_PATH}"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: emqx-tls
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: home-automation
+    - name: https-flux-webhook
+      protocol: HTTPS
+      port: 443
+      hostname: "flux-webhook.${BASE_PATH}"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: flux-webhook-tls
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: flux-system
