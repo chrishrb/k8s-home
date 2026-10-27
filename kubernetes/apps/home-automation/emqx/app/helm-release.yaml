@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: *app
-      version: 2.2.29
+      version: 2.3.3
       sourceRef:
         kind: HelmRepository
         name: emqx-charts
@@ -28,10 +28,6 @@ spec:
   # Values link: https://github.com/emqx/emqx-operator/blob/main/deploy/charts/emqx-operator/values.yaml
   values:
     skipCRDs: false
-
-    image:
-      repository: ghcr.io/emqx/emqx-operator
-      tag: 2.3.3
 
     resources:
       limits:
