@@ -1,0 +1,17 @@
+---
+apiVersion: db.movetokube.com/v1alpha1
+kind: Postgres
+metadata:
+  name: <APP>-db
+spec:
+  database: <APP>
+---
+apiVersion: db.movetokube.com/v1alpha1
+kind: PostgresUser
+metadata:
+  name: <APP>-user
+spec:
+  role: <APP>
+  database: <APP>-db
+  secretName: database
+  privileges: OWNER
