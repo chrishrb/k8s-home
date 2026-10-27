@@ -6,5 +6,5 @@ resources:
   - ./external-secret.yaml
   - ./helm-release.yaml
   # - ./database.yaml
-  # - ../../../../tmpl/volsync
+  # - ./pvc.yaml
   # - ../../../../tmpl/gatus/external

@@ -17,7 +17,7 @@ spec:
     name: home-kubernetes
   dependsOn:
     - name: external-secrets # only if the app has an ExternalSecret
-    # - name: openebs          # only if it uses persistence / volsync
+    # - name: openebs          # only if it uses persistence
     # - name: postgres-cluster # only if it uses a database.yaml
   prune: true
   wait: true
@@ -27,4 +27,3 @@ spec:
     substitute:
       APP: *app
       # GATUS_SUBDOMAIN: <APP>   # only with the gatus component
-      # VOLSYNC_CAPACITY: 1Gi    # only with the volsync component

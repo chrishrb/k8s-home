@@ -8,7 +8,6 @@
 - [ingress-nginx](https://github.com/kubernetes/ingress-nginx): Kubernetes ingress controller using NGINX as a reverse proxy and load balancer.
 - [sops](https://github.com/getsops/sops): Managed secrets for Kubernetes and Terraform which are commited to Git.
 - [spegel](https://github.com/spegel-org/spegel): Stateless cluster local OCI registry mirror.
-- [volsync](https://github.com/backube/volsync): Backup and recovery of persistent volume claims
 
 ## GitOps
 
@@ -32,4 +31,4 @@ This Git repository contains the following directories under [Kubernetes](./kube
 
 ## Backup / recovery
 
-Backups are managed by [volsync](https://github.com/backube/volsync) and stored in my private cloud storage. After restore you may have to restart some services (e.g. home-assistant) to make them work.
+PVC backups are currently disabled (volsync was removed).

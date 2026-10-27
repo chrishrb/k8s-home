@@ -20,14 +20,9 @@ spec:
     - name: emqx-cluster
     - name: postgres-cluster
     - name: ext-postgres-operator
-    - name: volsync
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_PUID: "0"
-      VOLSYNC_PGID: "0"
-      VOLSYNC_CLAIM: home-assistant-config
-      VOLSYNC_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: hass
   prune: true
   wait: true

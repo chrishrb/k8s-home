@@ -31,7 +31,7 @@ Kustomizations form a `dependsOn` chain, so one failure upstream shows up as man
 - **Workload:**
   - Run `kubectl -n <ns> get pods,pvc,externalsecret`, `kubectl -n <ns> describe pod <pod>`, `kubectl -n <ns> logs <pod> --previous` and `stern -n <ns> <app>`.
   - An ExternalSecret that isn't `SecretSynced` usually means a wrong Bitwarden UUID or key name.
-  - A Pending PVC means openebs or volsync trouble.
+  - A Pending PVC means openebs trouble.
 
 ## 3. Correlate with observability (if the Grafana MCP tools are available)
 
