@@ -327,6 +327,20 @@
     {
       customType: 'regex',
       description: [
+        'Process Gateway API CRD release URLs',
+      ],
+      fileMatch: [
+        '(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$',
+      ],
+      matchStrings: [
+        'https://github\\.com/kubernetes-sigs/gateway-api/releases/download/(?<currentValue>v[^/]+)/',
+      ],
+      depNameTemplate: 'kubernetes-sigs/gateway-api',
+      datasourceTemplate: 'github-releases',
+    },
+    {
+      customType: 'regex',
+      description: [
         'Process CloudNativePG cluster images',
       ],
       fileMatch: [
