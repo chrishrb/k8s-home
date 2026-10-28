@@ -53,12 +53,12 @@ tasks:
         sh: test -n "{{.TF_STATE_BUCKET}}"
 
   plan:
-    desc: Plan infra/ (needs AWS and CNTB_OAUTH2_* credentials)
+    desc: Plan infra/ (needs AWS, CNTB_OAUTH2_* and SENTRY_AUTH_TOKEN credentials)
     cmd: tofu -chdir={{.INFRA_DIR}} plan -input=false -var-file=environments/{{.TF_ENV}}.tfvars {{.CLI_ARGS}}
     preconditions: *bucket
 
   apply:
-    desc: Apply infra/ (needs AWS and CNTB_OAUTH2_* credentials)
+    desc: Apply infra/ (needs AWS, CNTB_OAUTH2_* and SENTRY_AUTH_TOKEN credentials)
     cmd: tofu -chdir={{.INFRA_DIR}} apply -input=false -var-file=environments/{{.TF_ENV}}.tfvars {{.CLI_ARGS}}
     preconditions: *bucket
 

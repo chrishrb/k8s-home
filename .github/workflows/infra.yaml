@@ -8,7 +8,8 @@ name: "Infra"
 #
 # GitHub configuration (environment `production`):
 #   variables: AWS_DEPLOY_ROLE_ARN, TF_STATE_BUCKET (outputs of infra/bootstrap)
-#   secrets:   CNTB_OAUTH2_CLIENT_ID, CNTB_OAUTH2_CLIENT_SECRET, CNTB_OAUTH2_USER, CNTB_OAUTH2_PASS
+#   secrets:   CNTB_OAUTH2_CLIENT_ID, CNTB_OAUTH2_CLIENT_SECRET, CNTB_OAUTH2_USER, CNTB_OAUTH2_PASS,
+#              SENTRY_AUTH_TOKEN (organization token of the Sentry org noonside)
 
 on:
   pull_request:
@@ -61,6 +62,7 @@ jobs:
       CNTB_OAUTH2_CLIENT_SECRET: ${{ secrets.CNTB_OAUTH2_CLIENT_SECRET }}
       CNTB_OAUTH2_USER: ${{ secrets.CNTB_OAUTH2_USER }}
       CNTB_OAUTH2_PASS: ${{ secrets.CNTB_OAUTH2_PASS }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
     steps:
       - uses: actions/checkout@v7
       - uses: aws-actions/configure-aws-credentials@v6

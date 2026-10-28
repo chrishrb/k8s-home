@@ -10,6 +10,10 @@ terraform {
       source  = "contabo/contabo"
       version = "~> 0.1.44"
     }
+    sentry = {
+      source  = "jianyuan/sentry"
+      version = "~> 0.15"
+    }
   }
 
   # State bucket from infra/bootstrap (bucket and region passed by `task infra:init`).
@@ -30,3 +34,8 @@ provider "aws" {
 # Reads CNTB_OAUTH2_CLIENT_ID, CNTB_OAUTH2_CLIENT_SECRET, CNTB_OAUTH2_USER and
 # CNTB_OAUTH2_PASS from the environment.
 provider "contabo" {}
+
+# EU region. Reads SENTRY_AUTH_TOKEN from the environment.
+provider "sentry" {
+  base_url = "https://de.sentry.io/api/"
+}
