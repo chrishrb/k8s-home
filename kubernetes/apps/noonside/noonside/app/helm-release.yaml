@@ -40,6 +40,13 @@ spec:
     web:
       image:
         repository: ghcr.io/chrishrb/noonside-web
+    # Ahead of the chart's default (v2.196.0): v2.197.0 matches the schema of
+    # the Supabase project the data came from (MFA recovery codes, SCIM,
+    # one_time_tokens.expires_at). Drop once the chart has caught up.
+    auth:
+      image:
+        repository: supabase/gotrue
+        tag: v2.197.0
     # Sweego (EU, free plan: 100 emails a day), sending domain
     # mail.noonside.de (its DNS records are at the registrar). The password is
     # SMTP_PASSWORD / GOTRUE_SMTP_PASS.
