@@ -1,7 +1,5 @@
-cluster:
-  discovery:
-    registries:
-      kubernetes:
-        disabled: false
-      service:
-        disabled: true
+# Single node: the discovery service registry isn't needed (it was disabled before Talos 1.14)
+apiVersion: v1alpha1
+kind: DiscoveryServiceConfig
+name: default
+$$patch: delete

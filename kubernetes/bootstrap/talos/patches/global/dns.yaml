@@ -1,5 +1,11 @@
-machine:
-  network:
-    nameservers:
-      - 1.1.1.1
-      - 1.0.0.1
+apiVersion: v1alpha1
+kind: ResolverConfig
+nameservers:
+  - address: 1.1.1.1
+  - address: 1.0.0.1
+searchDomains:
+  disableDefault: true
+hostDNS:
+  enabled: true
+  resolveMemberNames: true
+  forwardKubeDNSToHost: true # Requires Cilium `bpf.masquerade: false`
