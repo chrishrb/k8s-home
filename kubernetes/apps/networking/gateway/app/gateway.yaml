@@ -24,12 +24,11 @@ spec:
         namespaces:
           from: Same
     # One listener per hostname; each only accepts routes from its app's namespace
-    # noonside: staging host until the cutover, then app.noonside.de
-    # (its DNS A record → this IP; see solar0's docs/k8s-migration.md)
+    # noonside: DNS at IONOS (app.noonside.de A → this IP)
     - name: https-noonside
       protocol: HTTPS
       port: 443
-      hostname: "noonside.${BASE_PATH}"
+      hostname: "app.noonside.de"
       tls:
         mode: Terminate
         certificateRefs:

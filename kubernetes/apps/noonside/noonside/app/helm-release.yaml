@@ -24,10 +24,10 @@ spec:
   # Everything specific to this installation lives here; secrets come from
   # external-secret.yaml.
   values:
-    # Staging host while app.noonside.de still points at the AWS deployment;
-    # switch together with the gateway listener (and the DNS record) at the
-    # cutover (docs/k8s-migration.md, tag archive/pre-public in solar0).
-    host: noonside.${BASE_PATH}
+    # Keep in sync with the https-noonside listener in
+    # networking/gateway/app/gateway.yaml and the URLs in gatus.yaml. DNS
+    # (app.noonside.de A → the node IP) is at IONOS.
+    host: app.noonside.de
     annotations:
       reloader.stakater.com/auto: "true"
     api:
@@ -82,11 +82,10 @@ spec:
           sectionName: https-noonside
     # Hosted FTP for Solar-Logs (SFTPGo): FTP on 21 and the passive ports on
     # the node's public IP (shared with the gateway), allowed in by
-    # network-policy.yaml. noonside-ftp.${BASE_PATH} resolves through the
-    # wildcard record; becomes ftp.noonside.de at the cutover.
+    # network-policy.yaml. ftp.noonside.de: A record at IONOS → the node IP.
     hostedFtp:
       enabled: true
-      publicHost: noonside-ftp.${BASE_PATH}
+      publicHost: ftp.noonside.de
       admin:
         existingSecret: noonside-sftpgo
       ftp:
