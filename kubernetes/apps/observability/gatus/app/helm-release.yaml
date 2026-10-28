@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.7.3
+      version: 5.3.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -29,7 +29,12 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
 
+        serviceAccount:
+          identifier: gatus
+
         pod:
+          # config-sync watches ConfigMaps through the API (see rbac.yaml)
+          automountServiceAccountToken: true
           dnsConfig:
             options:
               - { name: ndots, value: "1" }
@@ -117,8 +122,7 @@ spec:
             scrapeTimeout: 10s
 
     serviceAccount:
-      create: true
-      name: gatus
+      gatus: {}
 
     persistence:
       config:
