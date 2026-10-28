@@ -27,8 +27,9 @@ spec:
   resources:
     requests:
       cpu: 500m
+      memory: 1Gi # without a request it defaulted to the 4Gi limit, too much for the 12 GB node
     limits:
-      memory: 4Gi
+      memory: 2Gi
 
   affinity:
     enablePodAntiAffinity: false
