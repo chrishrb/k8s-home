@@ -10,9 +10,9 @@ spec:
       interval: 60m
       sourceRef:
         kind: HelmRepository
-        name: grafana-charts
+        name: grafana-community-charts
         namespace: flux-system
-      version: 10.5.15
+      version: 14.2.0
   interval: 60m
   timeout: 20m
   maxHistory: 2
