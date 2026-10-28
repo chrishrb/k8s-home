@@ -20,7 +20,18 @@
   ],
   ignorePaths: [
     '**/*.sops.*',
+    // Upstream cluster-template sources, not deployed
+    '**/bootstrap/templates/**',
   ],
+  nix: {
+    enabled: true,
+  },
+  lockFileMaintenance: {
+    enabled: true,
+    schedule: [
+      'before 6am on the first day of the month',
+    ],
+  },
   flux: {
     fileMatch: [
       '(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$',
@@ -118,9 +129,41 @@
       separateMinorPatch: true,
       matchPackageNames: [
         '/siderolabs/talosctl/',
-        '/siderolabs/installer/',
         'siderolabs/talos',
       ],
+    },
+    {
+      description: [
+        'Kubernetes minor bumps must fit the Talos support matrix, so they wait for approval on the dashboard',
+      ],
+      matchPackageNames: [
+        'ghcr.io/siderolabs/kubelet',
+      ],
+      matchUpdateTypes: [
+        'major',
+        'minor',
+      ],
+      dependencyDashboardApproval: true,
+    },
+    {
+      description: [
+        'Bootstrap helmfile pulls spegel from OCI, Flux from a HelmRepository: bump both in one PR',
+      ],
+      matchDepNames: [
+        'spegel',
+        'ghcr.io/spegel-org/helm-charts/spegel',
+      ],
+      groupName: 'spegel',
+    },
+    {
+      description: [
+        'Bootstrap helmfile pulls prometheus-operator-crds from OCI, Flux from a HelmRepository: bump both in one PR',
+      ],
+      matchDepNames: [
+        'prometheus-operator-crds',
+        'ghcr.io/prometheus-community/charts/prometheus-operator-crds',
+      ],
+      groupName: 'prometheus-operator-crds',
     },
     {
       matchDatasources: [
