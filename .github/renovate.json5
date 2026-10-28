@@ -147,16 +147,6 @@
     },
     {
       description: [
-        'Bootstrap helmfile pulls spegel from OCI, Flux from a HelmRepository: bump both in one PR',
-      ],
-      matchDepNames: [
-        'spegel',
-        'ghcr.io/spegel-org/helm-charts/spegel',
-      ],
-      groupName: 'spegel',
-    },
-    {
-      description: [
         'Bootstrap helmfile pulls prometheus-operator-crds from OCI, Flux from a HelmRepository: bump both in one PR',
       ],
       matchDepNames: [

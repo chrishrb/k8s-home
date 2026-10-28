@@ -15,5 +15,4 @@ resources:
   - ./openebs.yaml
   - ./postfinance.yaml
   - ./prometheus-community.yaml
-  - ./spegel.yaml
   - ./stakater.yaml
