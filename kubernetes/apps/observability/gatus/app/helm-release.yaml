@@ -93,7 +93,11 @@ spec:
               RESOURCE: configmap
               UNIQUE_FILENAMES: true
               METHOD: SLEEP
-            resources: *resources
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 512Mi # lists ConfigMaps in all namespaces; OOMKilled at 128Mi
 
     service:
       app:
