@@ -10,10 +10,10 @@ spec:
   chart:
     spec:
       chart: loki
-      version: 6.55.0
+      version: 20.0.2
       sourceRef:
         kind: HelmRepository
-        name: grafana-charts
+        name: grafana-community-charts
         namespace: flux-system
   install:
     crds: Skip
@@ -29,13 +29,16 @@ spec:
     - name: openebs
       namespace: openebs-system
   values:
-    deploymentMode: SingleBinary
+    deploymentMode: Monolithic
     loki:
       auth_enabled: false
       analytics:
         reporting_enabled: false
       server:
         log_level: info
+      extraMemberlistConfig:
+        # single replica: the memberlist Service has no ready endpoints during startup
+        abort_if_cluster_join_fails: false
       commonConfig:
         replication_factor: 1
       compactor:
