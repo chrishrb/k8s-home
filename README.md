@@ -6,7 +6,6 @@
 - [cilium](https://github.com/cilium/cilium): Internal Kubernetes container networking interface, and the [Gateway API](https://gateway-api.sigs.k8s.io/) implementation that exposes services.
 - [external-secrets](https://github.com/external-secrets/external-secrets): Managed Kubernetes secrets using [bitwarden secrets manager](https://external-secrets.io/latest/provider/bitwarden-secrets-manager/).
 - [sops](https://github.com/getsops/sops): Managed secrets for Kubernetes and Terraform which are commited to Git.
-- [spegel](https://github.com/spegel-org/spegel): Stateless cluster local OCI registry mirror.
 
 ## GitOps
 
