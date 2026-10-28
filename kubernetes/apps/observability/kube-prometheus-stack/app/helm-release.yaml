@@ -57,10 +57,6 @@ spec:
           - action: drop
             sourceLabels: ["__name__"]
             regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
-    kubeApiServer:
-      serviceMonitor:
-        selector:
-          k8s-app: kube-apiserver
     kubeScheduler:
       service:
         selector:
