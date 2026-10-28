@@ -399,5 +399,18 @@
       ],
       datasourceTemplate: '{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}',
     },
+    {
+      customType: 'regex',
+      description: [
+        'Process tool versions in GitHub workflows (tags are v-prefixed, values are not)',
+      ],
+      fileMatch: [
+        '(^|/)\\.github/workflows/.+\\.ya?ml$',
+      ],
+      matchStrings: [
+        'datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+: (?<currentValue>\\S+)',
+      ],
+      extractVersionTemplate: '^v?(?<version>.+)$',
+    },
   ],
 }

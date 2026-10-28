@@ -1,0 +1,77 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: "Infra"
+
+# OpenTofu in infra/: checked on pull requests, applied from main. The apply job
+# runs in the `production` environment, the only one the deploy role from
+# infra/bootstrap trusts. infra/bootstrap itself is applied locally
+# (task infra:bootstrap).
+#
+# GitHub configuration (environment `production`):
+#   variables: AWS_DEPLOY_ROLE_ARN, TF_STATE_BUCKET (outputs of infra/bootstrap)
+#   secrets:   CNTB_OAUTH2_CLIENT_ID, CNTB_OAUTH2_CLIENT_SECRET, CNTB_OAUTH2_USER, CNTB_OAUTH2_PASS
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths: ["infra/**", ".github/workflows/infra.yaml"]
+  push:
+    branches: ["main"]
+    paths: ["infra/**", "!infra/bootstrap/**", ".github/workflows/infra.yaml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  AWS_REGION: eu-central-1
+  # renovate: datasource=github-releases depName=opentofu/opentofu
+  TOFU_VERSION: 1.10.7
+
+jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    env:
+      TF_DATA_DIR: .terraform-check
+    steps:
+      - uses: actions/checkout@v7
+      - uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: ${{ env.TOFU_VERSION }}
+      - run: tofu fmt -check -recursive infra
+      - run: tofu -chdir=infra/bootstrap init -backend=false -input=false
+      - run: tofu -chdir=infra/bootstrap validate
+      - run: tofu -chdir=infra init -backend=false -input=false
+      - run: tofu -chdir=infra validate
+
+  apply:
+    name: Apply
+    needs: check
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment: production
+    concurrency:
+      group: infra
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write # GitHub OIDC -> AWS deploy role
+    env:
+      CNTB_OAUTH2_CLIENT_ID: ${{ secrets.CNTB_OAUTH2_CLIENT_ID }}
+      CNTB_OAUTH2_CLIENT_SECRET: ${{ secrets.CNTB_OAUTH2_CLIENT_SECRET }}
+      CNTB_OAUTH2_USER: ${{ secrets.CNTB_OAUTH2_USER }}
+      CNTB_OAUTH2_PASS: ${{ secrets.CNTB_OAUTH2_PASS }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: ${{ env.TOFU_VERSION }}
+      - run: >-
+          tofu -chdir=infra init -input=false
+          -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}"
+          -backend-config="region=${{ env.AWS_REGION }}"
+      - run: tofu -chdir=infra apply -input=false -auto-approve -var-file=environments/prod.tfvars

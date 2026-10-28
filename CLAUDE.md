@@ -20,6 +20,8 @@ GitOps repo for a home Kubernetes cluster: Talos Linux nodes, with Flux v2 recon
 - `kubernetes/flux/`: Flux config, Helm/OCI/Git repositories, and cluster vars (`cluster-settings`, encrypted `cluster-secrets` holding e.g. `BASE_PATH`).
 - `kubernetes/bootstrap/`: Talos (talhelper) and the initial Flux/helmfile bootstrap.
 - `bootstrap/templates/`: makejinja templates from the upstream cluster-template. Not used for day-to-day changes.
+- `infra/`: OpenTofu for what lives outside the cluster: the Contabo VPS (Talos image + instance) and the S3 backup buckets with their IAM user. State is in S3 (`k8s-home/infra.tfstate`). The `Infra` workflow applies it from `main` via the GitHub OIDC deploy role. Never run `tofu apply` yourself; changing the instance's `image_id` reinstalls the node.
+- `infra/bootstrap/`: one-time stack, applied locally (`task infra:bootstrap`). It holds the state bucket, the deploy role (scoped to `k8s-home-backup-*` buckets and `k8s-home-*` users) and the permissions boundary for those users. The deploy role trusts the account's GitHub OIDC provider, which solar0's bootstrap owns, so it's only a data source here.
 
 ## Conventions
 
@@ -36,6 +38,7 @@ GitOps repo for a home Kubernetes cluster: Talos Linux nodes, with Flux v2 recon
 - `task kubernetes:reconcile`: force Flux to pull from git.
 - `task kubernetes:resources`: dump common cluster resources.
 - `task talos:sync` (`DRY_RUN=true` to preview): upgrade Talos, then Kubernetes, to the versions in `talconfig.yaml`. Changes the node, so only run it when the user asks.
+- `task infra:check`: fmt + validate the OpenTofu code. `task infra:plan` needs `TF_STATE_BUCKET`, AWS credentials and `CNTB_OAUTH2_*`.
 - `task --list`: list all tasks.
 
 ## Upgrades

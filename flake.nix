@@ -25,6 +25,7 @@
             jq
             kubeconform
             kustomize
+            opentofu
             minijinja
             talosctl
             sops
