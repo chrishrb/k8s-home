@@ -48,7 +48,7 @@ portSelector:
   protocol: tcp
 ingress:
   - subnet: 10.244.0.0/16
-  - subnet: 184.174.36.58/32
+  - subnet: 109.205.183.14/32
 ---
 apiVersion: v1alpha1
 kind: NetworkRuleConfig
@@ -59,4 +59,4 @@ portSelector:
   protocol: udp
 ingress:
   - subnet: 10.244.0.0/16
-  - subnet: 184.174.36.58/32
+  - subnet: 109.205.183.14/32

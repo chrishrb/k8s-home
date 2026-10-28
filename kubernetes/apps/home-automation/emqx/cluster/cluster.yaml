@@ -63,7 +63,7 @@ spec:
       annotations:
         lbipam.cilium.io/sharing-key: default
         lbipam.cilium.io/sharing-cross-namespace: "*"
-        lbipam.cilium.io/ips: "184.174.36.58"
+        lbipam.cilium.io/ips: "109.205.183.14"
     spec:
       type: LoadBalancer
       allocateLoadBalancerNodePorts: false # Cilium LB IPAM serves the IP directly; NodePorts would only add exposed ports

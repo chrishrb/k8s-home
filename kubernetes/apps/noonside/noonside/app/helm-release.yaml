@@ -88,13 +88,13 @@ spec:
       admin:
         existingSecret: noonside-sftpgo
       ftp:
-        forcePassiveIP: "184.174.36.58"
+        forcePassiveIP: "109.205.183.14"
       service:
         type: LoadBalancer
         externalTrafficPolicy: Cluster
         allocateLoadBalancerNodePorts: false
         annotations:
-          lbipam.cilium.io/ips: "184.174.36.58"
+          lbipam.cilium.io/ips: "109.205.183.14"
           lbipam.cilium.io/sharing-key: default
           lbipam.cilium.io/sharing-cross-namespace: "*"
       storage:
