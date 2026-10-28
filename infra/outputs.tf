@@ -23,3 +23,15 @@ output "backup_secret_access_key" {
   value       = aws_iam_access_key.backup.secret
   sensitive   = true
 }
+
+# The provider marks the whole dsn map sensitive (it includes the deprecated
+# secret DSN); the public DSN is not secret.
+output "sentry_dsn_api" {
+  description = "noonside HelmRelease value sentry.api.dsn."
+  value       = nonsensitive(sentry_key.noonside_api.dsn["public"])
+}
+
+output "sentry_dsn_web" {
+  description = "noonside HelmRelease value sentry.web.dsn."
+  value       = nonsensitive(sentry_key.noonside_web.dsn["public"])
+}

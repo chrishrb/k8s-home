@@ -37,3 +37,9 @@ variable "backup_noncurrent_days" {
   type        = number
   default     = 30
 }
+
+variable "sentry_organization" {
+  description = "Slug of the Sentry organization (EU region) holding the noonside projects."
+  type        = string
+  default     = "noonside"
+}
