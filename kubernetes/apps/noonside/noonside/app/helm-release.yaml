@@ -66,9 +66,9 @@ spec:
       storage:
         storageClass: openebs-hostpath
       backup:
-        enabled: false # TODO: S3 keys in Bitwarden + noonside-pg-backup (external-secret.yaml)
+        enabled: false # TODO: k8s-home-backup keys (tofu output) in Bitwarden + noonside-pg-backup (external-secret.yaml)
         s3:
-          destinationPath: s3://solar0-prod-pg-backups/noonside
+          destinationPath: s3://k8s-home-backup-noonside-905418359817/noonside-pg # infra/backups.tf
           endpointURL: https://s3.eu-central-1.amazonaws.com
           credentials:
             existingSecret: noonside-pg-backup
