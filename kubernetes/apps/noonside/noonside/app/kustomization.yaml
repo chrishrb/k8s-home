@@ -6,4 +6,5 @@ resources:
   - ./external-secret.yaml
   - ./oci-repository.yaml
   - ./helm-release.yaml
+  - ./network-policy.yaml
   - ./gatus.yaml

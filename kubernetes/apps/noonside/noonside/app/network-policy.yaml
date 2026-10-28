@@ -1,0 +1,28 @@
+---
+# SFTPGo (hosted FTP): only FTP (21 → 2121) and the passive data ports are
+# public; its SFTP and REST API stay in-cluster (the API uses them).
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: noonside-sftpgo
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: noonside
+      app.kubernetes.io/component: sftpgo
+  ingress:
+    - fromEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: "2121"
+              protocol: TCP
+            - port: "40000"
+              endPort: 40019
+              protocol: TCP
+    - fromEntities:
+        - cluster
+        - host
+        - remote-node
+        - ingress

@@ -78,14 +78,24 @@ spec:
         - name: external
           namespace: networking
           sectionName: https-noonside
-    # Hosted FTP for Solar-Logs (SFTPGo). Needs a public IP for FTP and the
-    # passive ports, and a DNS name for it.
+    # Hosted FTP for Solar-Logs (SFTPGo): FTP on 21 and the passive ports on
+    # the node's public IP (shared with the gateway), allowed in by
+    # network-policy.yaml. noonside-ftp.${BASE_PATH} resolves through the
+    # wildcard record; becomes ftp.noonside.de at the cutover.
     hostedFtp:
-      enabled: false # TODO: LoadBalancer IP, DNS record, then enable
-      publicHost: ftp.noonside.de
+      enabled: true
+      publicHost: noonside-ftp.${BASE_PATH}
       admin:
         existingSecret: noonside-sftpgo
       ftp:
-        forcePassiveIP: "" # the LoadBalancer's public IP
+        forcePassiveIP: "184.174.36.58"
+      service:
+        type: LoadBalancer
+        externalTrafficPolicy: Cluster
+        allocateLoadBalancerNodePorts: false
+        annotations:
+          lbipam.cilium.io/ips: "184.174.36.58"
+          lbipam.cilium.io/sharing-key: default
+          lbipam.cilium.io/sharing-cross-namespace: "*"
       storage:
         storageClass: openebs-hostpath
