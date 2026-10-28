@@ -18,7 +18,7 @@ spec:
   dependsOn:
     - name: external-secrets # only if the app has an ExternalSecret
     # - name: openebs          # only if it uses persistence
-    # - name: postgres-cluster # only if it uses a database.yaml
+    # - name: cloudnative-pg # only if it uses a database.yaml
   prune: true
   wait: true
   interval: 30m

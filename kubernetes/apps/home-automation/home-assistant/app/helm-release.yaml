@@ -44,12 +44,6 @@ spec:
             image:
               repository: ghcr.io/home-assistant/home-assistant
               tag: 2026.10.4
-            env:
-              SECRET_RECORDER_DB_URL:
-                valueFrom:
-                  secretKeyRef:
-                    name: database-homeassistant-user
-                    key: POSTGRES_URL
 
             probes:
               liveness: &probes

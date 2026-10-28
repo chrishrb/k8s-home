@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: databases
+  name: cnpg-system
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/notification.toolkit.fluxcd.io/provider_v1.json
 apiVersion: notification.toolkit.fluxcd.io/v1
 kind: Provider
 metadata:
   name: alert-manager
-  namespace: databases
+  namespace: cnpg-system
 spec:
   type: alertmanager
   address: http://alertmanager-operated.observability.svc.cluster.local:9093/api/v2/alerts/
@@ -19,7 +19,7 @@ apiVersion: notification.toolkit.fluxcd.io/v1
 kind: Alert
 metadata:
   name: alert-manager
-  namespace: databases
+  namespace: cnpg-system
 spec:
   providerRef:
     name: alert-manager

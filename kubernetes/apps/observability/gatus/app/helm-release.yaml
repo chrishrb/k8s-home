@@ -55,12 +55,15 @@ spec:
               TZ: Europe/Stockholm
               GATUS_CONFIG_PATH: /config
               CUSTOM_WEB_PORT: &port 80
+              POSTGRES_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: gatus-pg-app # created by CloudNativePG (database.yaml)
+                    key: uri
 
             envFrom:
               - secretRef:
                   name: gatus-secret
-              - secretRef:
-                  name: database-gatus-user
 
             probes:
               liveness: &probes

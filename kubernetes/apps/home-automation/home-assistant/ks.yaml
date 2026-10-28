@@ -18,8 +18,6 @@ spec:
   dependsOn:
     - name: openebs
     - name: emqx-cluster
-    - name: postgres-cluster
-    - name: ext-postgres-operator
   postBuild:
     substitute:
       APP: *app

@@ -1,8 +1,0 @@
----
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - ./external-secret.yaml
-  - ./postgres-cluster.yaml
-  # - ./backup.yaml # TODO: re-enable with the plugins block in postgres-cluster.yaml once S3 is set up
-  - ./gatus.yaml
