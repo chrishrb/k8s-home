@@ -1,0 +1,75 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: '3'
+
+# OpenTofu in infra/ (Contabo node, S3 backup buckets) and infra/bootstrap
+# (state bucket, GitHub OIDC deploy role). State lives in the bucket from
+# infra/bootstrap: set TF_STATE_BUCKET (and TF_STATE_REGION if not eu-central-1).
+
+vars:
+  INFRA_DIR: '{{.ROOT_DIR}}/infra'
+  BOOTSTRAP_DIR: '{{.ROOT_DIR}}/infra/bootstrap'
+  TF_STATE_REGION: '{{.TF_STATE_REGION | default "eu-central-1"}}'
+  TF_ENV: '{{.TF_ENV | default "prod"}}'
+
+tasks:
+
+  bootstrap:
+    desc: Apply infra/bootstrap; the first run (no TF_STATE_BUCKET) creates the state bucket and moves its own state into it
+    dir: '{{.BOOTSTRAP_DIR}}'
+    cmds:
+      - task: '{{if .TF_STATE_BUCKET}}bootstrap-apply{{else}}bootstrap-first-apply{{end}}'
+
+  bootstrap-apply:
+    internal: true
+    dir: '{{.BOOTSTRAP_DIR}}'
+    cmds:
+      - tofu init -input=false -backend-config="bucket={{.TF_STATE_BUCKET}}" -backend-config="region={{.TF_STATE_REGION}}"
+      - tofu apply -input=false
+
+  bootstrap-first-apply:
+    internal: true
+    dir: '{{.BOOTSTRAP_DIR}}'
+    cmds:
+      # The backend override swaps the s3 backend for a local one until the bucket exists.
+      - printf 'terraform {\n  backend "local" {}\n}\n' > backend_override.tf
+      - defer: rm -f backend_override.tf
+      - tofu init -input=false -reconfigure
+      - tofu apply -input=false
+      - |
+        bucket="$(tofu output -raw state_bucket)"
+        rm -f backend_override.tf
+        tofu init -input=false -migrate-state -force-copy -backend-config="bucket=$bucket" -backend-config="region={{.TF_STATE_REGION}}"
+      - rm -f terraform.tfstate terraform.tfstate.backup
+      - 'echo "State migrated. Set TF_STATE_BUCKET=$(tofu output -raw state_bucket) (and as a GitHub variable), plus AWS_DEPLOY_ROLE_ARN=$(tofu output -raw deploy_role_arn)."'
+    status:
+      - test -n "{{.TF_STATE_BUCKET}}"
+
+  init:
+    desc: Initialize infra/ against the state bucket
+    cmd: tofu -chdir={{.INFRA_DIR}} init -input=false -reconfigure -backend-config="bucket={{.TF_STATE_BUCKET}}" -backend-config="region={{.TF_STATE_REGION}}"
+    preconditions: &bucket
+      - msg: Set TF_STATE_BUCKET (output state_bucket of infra/bootstrap)
+        sh: test -n "{{.TF_STATE_BUCKET}}"
+
+  plan:
+    desc: Plan infra/ (needs AWS and CNTB_OAUTH2_* credentials)
+    cmd: tofu -chdir={{.INFRA_DIR}} plan -input=false -var-file=environments/{{.TF_ENV}}.tfvars {{.CLI_ARGS}}
+    preconditions: *bucket
+
+  apply:
+    desc: Apply infra/ (needs AWS and CNTB_OAUTH2_* credentials)
+    cmd: tofu -chdir={{.INFRA_DIR}} apply -input=false -var-file=environments/{{.TF_ENV}}.tfvars {{.CLI_ARGS}}
+    preconditions: *bucket
+
+  check:
+    desc: Check formatting and validate the OpenTofu code
+    env:
+      # Own data dir, so it never touches a real `init` (backend, credentials).
+      TF_DATA_DIR: .terraform-check
+    cmds:
+      - tofu fmt -check -recursive {{.INFRA_DIR}}
+      - tofu -chdir={{.BOOTSTRAP_DIR}} init -backend=false -input=false
+      - tofu -chdir={{.BOOTSTRAP_DIR}} validate
+      - tofu -chdir={{.INFRA_DIR}} init -backend=false -input=false
+      - tofu -chdir={{.INFRA_DIR}} validate

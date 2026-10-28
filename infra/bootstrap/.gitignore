@@ -1,0 +1,5 @@
+.terraform/
+.terraform-check/
+*.tfstate
+*.tfstate.*
+*_override.tf
