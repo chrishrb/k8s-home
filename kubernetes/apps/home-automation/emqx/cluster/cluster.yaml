@@ -4,7 +4,7 @@ kind: EMQX
 metadata:
   name: emqx
 spec:
-  image: public.ecr.aws/emqx/emqx:5.8.9
+  image: docker.io/emqx/emqx:6.3.2 # 6.x isn't published to public.ecr.aws; emqx-operator 2.3+ needs >= 5.9
 
   config:
     mode: "Merge"
