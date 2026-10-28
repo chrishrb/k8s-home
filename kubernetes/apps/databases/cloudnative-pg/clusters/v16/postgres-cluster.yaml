@@ -5,7 +5,7 @@ metadata:
   name: postgres16
 spec:
   instances: 1 # adapt if you have more instances
-  imageName: ghcr.io/ahinko/postgres-extended:16.4.42
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.15-standard-trixie
   primaryUpdateStrategy: unsupervised
   storage:
     size: 50Gi
@@ -35,8 +35,6 @@ spec:
     enablePodAntiAffinity: false
 
   postgresql:
-    shared_preload_libraries:
-      - "vectors.so"
     parameters:
       max_connections: "300"
       shared_buffers: 512MB
