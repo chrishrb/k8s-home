@@ -53,13 +53,14 @@ spec:
     # Public half of `noonside keygen vapid`; VAPID_PRIVATE_KEY is in Bitwarden.
     vapidPublicKey: "BCgLu9XXpl1_OKjn2hfsEo9fY4IWKeYci9TCYrVYiiHC2yKXPPW0tIu4Z2oQDIbbYe_l5nxWU6Uk5Z88lpr5mSA"
     # Sentry (EU region), projects noonside-api and noonside-web
-    # (solar0 infra/: tofu output sentry_dsn_api, sentry_dsn_web).
+    # (infra/sentry.tf: tofu -chdir=infra output sentry_dsn_api, sentry_dsn_web).
+    # The DSNs are not secret.
     sentry:
-      enabled: false # TODO: set the DSNs and enable
+      enabled: true
       api:
-        dsn: ""
+        dsn: "https://6cc656d29609b0fb8442f60b034129ae@o4512204982255616.ingest.de.sentry.io/4512205226115152"
       web:
-        dsn: ""
+        dsn: "https://27e27662cd693ff85289be741764563a@o4512204982255616.ingest.de.sentry.io/4512205226115153"
     media:
       storageClass: openebs-hostpath
     postgres:
