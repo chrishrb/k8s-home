@@ -246,10 +246,10 @@ spec:
 
     resources:
       limits:
-        memory: 219M
+        memory: 512Mi # Grafana 13 OOMs at startup with 219M (12 already peaked at ~207Mi)
       requests:
         cpu: 23m
-        memory: 127M
+        memory: 256Mi
 
     serviceAccount:
       create: true
