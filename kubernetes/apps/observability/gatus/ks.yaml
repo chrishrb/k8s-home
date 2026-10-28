@@ -16,8 +16,7 @@ spec:
     kind: GitRepository
     name: home-kubernetes
   dependsOn:
-    - name: postgres-cluster
-    - name: ext-postgres-operator
+    - name: cloudnative-pg
     - name: external-secrets
   prune: true
   wait: true

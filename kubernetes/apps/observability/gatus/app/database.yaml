@@ -1,17 +1,31 @@
 ---
-apiVersion: db.movetokube.com/v1alpha1
-kind: Postgres
+# Gatus' own Postgres (CloudNativePG, operator in cnpg-system). The operator
+# creates the gatus-pg-app secret (uri, username, password, ...) for the
+# gatus user, which owns the gatus database.
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
 metadata:
-  name: gatus-db
+  name: gatus-pg
 spec:
-  database: gatus
----
-apiVersion: db.movetokube.com/v1alpha1
-kind: PostgresUser
-metadata:
-  name: gatus-user
-spec:
-  role: gatus
-  database: gatus-db
-  secretName: database
-  privileges: OWNER
+  instances: 1
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.6-standard-trixie
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 2Gi
+    storageClass: openebs-hostpath
+  bootstrap:
+    initdb:
+      database: gatus
+      owner: gatus
+  monitoring:
+    enablePodMonitor: true
+  resources:
+    requests:
+      cpu: 20m
+      memory: 128Mi
+    limits:
+      memory: 512Mi
+  postgresql:
+    parameters:
+      shared_buffers: 64MB
