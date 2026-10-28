@@ -25,16 +25,12 @@ while [[ "${dir}" != "${root}/kubernetes" && "${dir}" != "/" ]]; do
 done
 [[ -f "${dir}/kustomization.yaml" ]] || exit 0
 
-cache_dir="${TMPDIR:-/tmp}/kubeconform-cache"
-mkdir -p "${cache_dir}"
-
 kubeconform_args=(
     "-strict"
     "-ignore-missing-schemas"
     "-skip" "Secret,ExternalSecret,ReplicationSource,ReplicationDestination"
     "-schema-location" "default"
     "-schema-location" "https://kubernetes-schemas.pages.dev/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json"
-    "-cache" "${cache_dir}"
     "-summary"
 )
 
