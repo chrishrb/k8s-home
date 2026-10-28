@@ -4,5 +4,5 @@ kind: Kustomization
 resources:
   - ./external-secret.yaml
   - ./postgres-cluster.yaml
-  - ./backup.yaml
+  # - ./backup.yaml # TODO: re-enable with the plugins block in postgres-cluster.yaml once S3 is set up
   - ./gatus.yaml
