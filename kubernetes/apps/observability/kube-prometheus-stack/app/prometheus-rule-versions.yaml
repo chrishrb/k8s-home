@@ -1,0 +1,30 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: node-version-rules
+spec:
+  groups:
+    - name: node-version.rules
+      rules:
+        - alert: TalosVersionDrift
+          annotations:
+            summary: >-
+              Node {{ $labels.node }} runs {{ $labels.os_image }}, git wants Talos ${TALOS_VERSION}.
+              Run `task talos:sync`.
+          expr: |
+            kube_node_info{os_image!="Talos (${TALOS_VERSION})"}
+          for: 1h
+          labels:
+            severity: info
+        - alert: KubernetesVersionDrift
+          annotations:
+            summary: >-
+              Node {{ $labels.node }} runs kubelet {{ $labels.kubelet_version }}, git wants ${KUBERNETES_VERSION}.
+              Run `task talos:sync`.
+          expr: |
+            kube_node_info{kubelet_version!="${KUBERNETES_VERSION}"}
+          for: 1h
+          labels:
+            severity: info

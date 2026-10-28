@@ -16,6 +16,8 @@ The way Flux works for me here is it will recursively search the `kubernetes/${c
 
 [Renovate](https://github.com/renovatebot/renovate) watches my **entire** repository looking for dependency updates, when they are found a PR is automatically created. When some PRs are merged Flux applies the changes to my cluster.
 
+Talos and Kubernetes versions live in `kubernetes/bootstrap/talos/talconfig.yaml`. Renovate bumps them, but they aren't applied automatically. Once the PR is merged, the `TalosVersionDrift` / `KubernetesVersionDrift` alerts fire until `task talos:sync` (`DRY_RUN=true` to preview) upgrades the node.
+
 ## Directories
 
 This Git repository contains the following directories under [Kubernetes](./kubernetes/).

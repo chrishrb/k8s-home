@@ -103,7 +103,41 @@ tasks:
       - msg: Node not found
         sh: talosctl --nodes {{.KUBERNETES_CONTROLLER}} get machineconfig &>/dev/null
       - msg: Upstream Kubernetes version not found
-        sh: curl -fsSL -o /dev/null --fail https://github.com/siderolabs/kubelet/releases/tag/{{.KUBERNETES_VERSION}}
+        sh: curl -fsSL -o /dev/null --fail https://github.com/kubernetes/kubernetes/releases/tag/{{.KUBERNETES_VERSION}}
+
+  sync:
+    desc: Upgrade Talos and Kubernetes to the versions in talconfig.yaml, if they differ
+    summary: |-
+      Run after merging a Renovate Talos/Kubernetes PR (or when TalosVersionDrift /
+      KubernetesVersionDrift fires). Talos is upgraded first, then Kubernetes.
+      DRY_RUN=true: only print what would be done.
+    cmds:
+      - for: { var: TALOS_OUTDATED }
+        task: '{{if eq .DRY_RUN "true"}}print{{else}}upgrade-node{{end}}'
+        vars:
+          HOSTNAME: '{{.ITEM}}'
+          MSG: 'would upgrade Talos on {{.ITEM}} to {{.TALOS_VERSION}}'
+      - task: '{{if not .K8S_OUTDATED}}noop{{else if eq .DRY_RUN "true"}}print{{else}}upgrade-k8s{{end}}'
+        vars:
+          MSG: 'would upgrade Kubernetes on {{.K8S_OUTDATED}} to {{.KUBERNETES_VERSION}}'
+      - cmd: echo "Talos {{.TALOS_VERSION}} / Kubernetes {{.KUBERNETES_VERSION}}{{if and (not .TALOS_OUTDATED) (not .K8S_OUTDATED)}}, already up to date{{end}}"
+    vars:
+      DRY_RUN: '{{.DRY_RUN | default "false"}}'
+      TALOS_VERSION:
+        sh: yq '.talosVersion' {{.TALHELPER_CONFIG_FILE}}
+      KUBERNETES_VERSION:
+        sh: yq '.kubernetesVersion' {{.TALHELPER_CONFIG_FILE}}
+      TALOS_OUTDATED:
+        sh: kubectl get nodes --output=json | jq --raw-output '.items[] | select(.status.nodeInfo.osImage != "Talos ({{.TALOS_VERSION}})") | .metadata.name'
+      K8S_OUTDATED:
+        sh: kubectl get nodes --output=json | jq --raw-output '[.items[] | select(.status.nodeInfo.kubeletVersion != "{{.KUBERNETES_VERSION}}") | .metadata.name] | join(" ")'
+    preconditions:
+      - msg: Local checkout is behind origin/main, pull first so only merged versions get rolled out
+        sh: git fetch --quiet origin main && git merge-base --is-ancestor origin/main HEAD
+      - msg: Missing talosconfig
+        sh: test -f {{.TALOSCONFIG}}
+      - msg: Unable to retrieve Talos config
+        sh: talosctl config info &>/dev/null
 
   reset:
     desc: Resets nodes back to maintenance mode
@@ -118,6 +152,11 @@ tasks:
   up:
     internal: true
     cmd: flux --namespace flux-system resume kustomization --all
+
+  print:
+    internal: true
+    silent: true
+    cmd: echo "{{.MSG}}"
 
   # Ref: https://github.com/go-task/task/issues/608
   noop:

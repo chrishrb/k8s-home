@@ -35,7 +35,15 @@ GitOps repo for a home Kubernetes cluster: Talos Linux nodes, with Flux v2 recon
 - `task kubernetes:kubeconform`: validate every manifest (CI runs the same script, `scripts/kubeconform.sh`).
 - `task kubernetes:reconcile`: force Flux to pull from git.
 - `task kubernetes:resources`: dump common cluster resources.
+- `task talos:sync` (`DRY_RUN=true` to preview): upgrade Talos, then Kubernetes, to the versions in `talconfig.yaml`. Changes the node, so only run it when the user asks.
 - `task --list`: list all tasks.
+
+## Upgrades
+
+- Renovate bumps `talosVersion` / `kubernetesVersion` in `talconfig.yaml` together with `TALOS_VERSION` / `KUBERNETES_VERSION` in `kubernetes/flux/vars/cluster-settings.yaml` (same PR). Kubernetes minor bumps need approval on the Dependency Dashboard; check the Talos support matrix first.
+- Nothing applies Talos/Kubernetes bumps automatically (single node, so no tuppr). After the merge, `TalosVersionDrift` / `KubernetesVersionDrift` fire until someone runs `task talos:sync`.
+- Bootstrap-only pins (`kubernetes/bootstrap/helmfile.yaml`, `kubernetes/bootstrap/flux/kustomization.yaml`) are bumped by Renovate together with their Flux counterparts but only matter when rebuilding the cluster.
+- `flake.lock` gets a monthly Renovate lock-file-maintenance PR. `bootstrap/templates/` is ignored by Renovate.
 
 ## Claude tooling in this repo
 
