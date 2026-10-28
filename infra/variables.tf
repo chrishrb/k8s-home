@@ -27,9 +27,9 @@ variable "contabo_period" {
 }
 
 variable "backup_buckets" {
-  description = "Backup buckets, one per consumer (e.g. postgres for CloudNativePG)."
+  description = "Backup buckets, one per consumer (e.g. noonside for noonside-pg's barman-cloud backups)."
   type        = set(string)
-  default     = ["postgres"]
+  default     = ["noonside"]
 }
 
 variable "backup_noncurrent_days" {
