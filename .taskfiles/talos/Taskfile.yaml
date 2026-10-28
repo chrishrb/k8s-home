@@ -15,7 +15,21 @@ tasks:
 
   generate-config:
     desc: Generate Talos configuration
-    cmd: talhelper genconfig --config-file {{.TALHELPER_CONFIG_FILE}} --secret-file {{.TALHELPER_SECRET_FILE}} --out-dir {{.TALHELPER_CLUSTER_DIR}}
+    cmds:
+      - talhelper genconfig --config-file {{.TALHELPER_CONFIG_FILE}} --secret-file {{.TALHELPER_SECRET_FILE}} --out-dir {{.TALHELPER_CLUSTER_DIR}}
+      # talhelper v3.1.17 vendors talos/pkg/machinery v1.14.0-alpha.2, which names the
+      # secretbox key "key1" in KubeEtcdEncryptionConfig. Talos itself has always used
+      # "key2" (fixed upstream before v1.14.0), and kube-apiserver looks keys up by name,
+      # so "key1" makes every existing Secret undecryptable. Drop this once talhelper
+      # ships machinery >= v1.14.0 (budimanjojo/talhelper#1708).
+      - for: { var: NODE_CONFIGS }
+        cmd: >-
+          yq --inplace
+          '(select(.kind == "KubeEtcdEncryptionConfig") | .config.resources[].providers[].secretbox.keys[] | select(.name == "key1") | .name) = "key2"'
+          {{.ITEM}}
+    vars:
+      NODE_CONFIGS:
+        sh: yq '.clusterName as $c | .nodes[].hostname | "{{.TALHELPER_CLUSTER_DIR}}/" + $c + "-" + . + ".yaml"' {{.TALHELPER_CONFIG_FILE}}
     preconditions:
       - msg: Missing talhelper config file
         sh: test -f {{.TALHELPER_CONFIG_FILE}}
