@@ -19,6 +19,8 @@ envoy:
   enabled: false
 gatewayAPI:
   enabled: true
+  gatewayClass:
+    create: "true" # "auto" depends on Helm seeing the CRDs at render time
 hubble:
   enabled: false
 ipam:
