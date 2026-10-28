@@ -110,6 +110,7 @@
       groupName: 'Talos',
       matchDatasources: [
         'docker',
+        'github-releases',
       ],
       group: {
         commitMessageTopic: '{{{groupName}}} group',
@@ -118,6 +119,7 @@
       matchPackageNames: [
         '/siderolabs/talosctl/',
         '/siderolabs/installer/',
+        'siderolabs/talos',
       ],
     },
     {
