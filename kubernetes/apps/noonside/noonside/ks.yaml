@@ -1,0 +1,31 @@
+---
+# noonside (PV monitoring): the Helm chart from github.com/chrishrb/noonside
+# (deploy/helm/noonside, published to GHCR by its deploy workflow) with its
+# own CloudNativePG cluster, the Auth server (GoTrue) and the API + web app.
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app noonside
+  namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
+spec:
+  targetNamespace: noonside
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: "./kubernetes/apps/noonside/noonside/app"
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  dependsOn:
+    - name: external-secrets
+    - name: openebs
+    - name: cloudnative-pg # operator + barman-cloud plugin
+  prune: true
+  wait: true
+  interval: 30m
+  timeout: 15m # first install: database, GoTrue's and the app's migrations
+  postBuild:
+    substitute:
+      APP: *app

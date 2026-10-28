@@ -1,0 +1,32 @@
+---
+# Uptime check (the shared tmpl/gatus component only knows hosts under
+# BASE_PATH); keep the URL in sync with the HelmRelease's host.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: noonside-gatus-ep
+  labels:
+    gatus.io/enabled: "true"
+data:
+  config.yaml: |
+    endpoints:
+      - name: noonside
+        group: external
+        url: "https://noonside.${BASE_PATH}/readyz"
+        interval: 1m
+        client:
+          dns-resolver: tcp://1.1.1.1:53
+        conditions:
+          - "[STATUS] == 200"
+        alerts:
+          - type: pushover
+      - name: noonside-auth
+        group: external
+        url: "https://noonside.${BASE_PATH}/auth/v1/health"
+        interval: 5m
+        client:
+          dns-resolver: tcp://1.1.1.1:53
+        conditions:
+          - "[STATUS] == 200"
+        alerts:
+          - type: pushover

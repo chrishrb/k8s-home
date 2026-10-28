@@ -1,0 +1,91 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: noonside
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: noonside-chart
+  install:
+    timeout: 15m
+    remediation:
+      retries: 3
+  upgrade:
+    timeout: 15m
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  # Values: deploy/helm/noonside/values.yaml in github.com/chrishrb/noonside.
+  # Everything specific to this installation lives here; secrets come from
+  # external-secret.yaml.
+  values:
+    # Staging host while app.noonside.de still points at the AWS deployment;
+    # switch together with the gateway listener (and the DNS record) at the
+    # cutover (docs/k8s-migration.md, tag archive/pre-public in solar0).
+    host: noonside.${BASE_PATH}
+    annotations:
+      reloader.stakater.com/auto: "true"
+    api:
+      image:
+        repository: ghcr.io/chrishrb/noonside-api
+      env:
+        # Keeps waitlist confirmations from using up Sweego's daily cap, so
+        # auth and alert emails always get through.
+        WAITLIST_MAILS_PER_HOUR: "3"
+    web:
+      image:
+        repository: ghcr.io/chrishrb/noonside-web
+    # Sweego (EU, free plan: 100 emails a day), sending domain
+    # mail.noonside.de (its DNS records are at the registrar). The password is
+    # SMTP_PASSWORD / GOTRUE_SMTP_PASS.
+    smtp:
+      host: prod-mta-05.swg-srv.net
+      port: 587
+      tls: starttls
+      user: "e626e5fef3334968a3ce00ac0aa28d36/smtp/5e7e7375-14ce-4838-bbdf-c05484c4e91c"
+      from: no-reply@mail.noonside.de
+      fromName: noonside
+    # Public half of `noonside keygen vapid`; VAPID_PRIVATE_KEY is in Bitwarden.
+    vapidPublicKey: "BCgLu9XXpl1_OKjn2hfsEo9fY4IWKeYci9TCYrVYiiHC2yKXPPW0tIu4Z2oQDIbbYe_l5nxWU6Uk5Z88lpr5mSA"
+    # Sentry (EU region), projects noonside-api and noonside-web
+    # (solar0 infra/: tofu output sentry_dsn_api, sentry_dsn_web).
+    sentry:
+      enabled: false # TODO: set the DSNs and enable
+      api:
+        dsn: ""
+      web:
+        dsn: ""
+    media:
+      storageClass: openebs-hostpath
+    postgres:
+      storage:
+        storageClass: openebs-hostpath
+      backup:
+        enabled: false # TODO: S3 keys in Bitwarden + noonside-pg-backup (external-secret.yaml)
+        s3:
+          destinationPath: s3://solar0-prod-pg-backups/noonside
+          endpointURL: https://s3.eu-central-1.amazonaws.com
+          credentials:
+            existingSecret: noonside-pg-backup
+    route:
+      enabled: true
+      parentRefs:
+        - name: external
+          namespace: networking
+          sectionName: https-noonside
+    # Hosted FTP for Solar-Logs (SFTPGo). Needs a public IP for FTP and the
+    # passive ports, and a DNS name for it.
+    hostedFtp:
+      enabled: false # TODO: LoadBalancer IP, DNS record, then enable
+      publicHost: ftp.noonside.de
+      admin:
+        existingSecret: noonside-sftpgo
+      ftp:
+        forcePassiveIP: "" # the LoadBalancer's public IP
+      storage:
+        storageClass: openebs-hostpath

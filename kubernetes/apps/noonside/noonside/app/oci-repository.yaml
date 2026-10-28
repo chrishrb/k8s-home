@@ -1,0 +1,17 @@
+---
+# The chart of github.com/chrishrb/noonside (public on GHCR, no pull secret).
+# Every deploy of main publishes a new 0.1.<run> version; Flux rolls out the
+# highest.
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: noonside-chart
+spec:
+  interval: 5m
+  url: oci://ghcr.io/chrishrb/charts/noonside
+  ref:
+    semver: ">=0.1.0"
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
