@@ -26,7 +26,7 @@ permissions:
 env:
   AWS_REGION: eu-central-1
   # renovate: datasource=github-releases depName=opentofu/opentofu
-  TOFU_VERSION: 1.10.7
+  TOFU_VERSION: 1.13.2
 
 jobs:
   check:
