@@ -33,7 +33,7 @@ releases:
           - apply
           - --server-side
           - --filename
-          - https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.6.1/standard-install.yaml
+          - https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.7.0/standard-install.yaml
     needs:
       - observability/prometheus-operator-crds
   - name: coredns
