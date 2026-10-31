@@ -1,43 +1,28 @@
 ---
-apiVersion: apps.emqx.io/v2beta1
+apiVersion: apps.emqx.io/v3beta1
 kind: EMQX
 metadata:
   name: emqx
 spec:
-  image: docker.io/emqx/emqx:6.3.2 # 6.x isn't published to public.ecr.aws; emqx-operator 2.3+ needs >= 5.9
+  image: docker.io/emqx/emqx:6.3.2 # 6.x isn't published to public.ecr.aws; emqx-operator 3.0 supports 5.9, 5.10 and 6.x
 
+  # API keys come from the emqx-bootstrap-api-key secret (app/external-secret.yaml):
+  # the operator only creates it when it's missing.
   config:
-    mode: "Merge"
-    data: |
-      authentication {
-        backend = "built_in_database"
-        mechanism = "password_based"
-        password_hash_algorithm {
-            name = "bcrypt"
-        }
-        user_id_type = "username"
-        bootstrap_file = "/opt/init-user.json"
-        bootstrap_type = "plain"
-      }
-      authorization {
-        sources = [
-          {
-            type = built_in_database
-            enable = true
-          }
-        ]
-
-        no_match = "deny"
-      }
-
-  bootstrapAPIKeys:
-    - secretRef:
-        key:
-          secretName: emqx-secret
-          secretKey: X_EMQX_EXPORTER_APIKEY_KEY
-        secret:
-          secretName: emqx-secret
-          secretKey: X_EMQX_EXPORTER_APIKEY_SECRET
+    roots:
+      authentication:
+        - backend: built_in_database
+          mechanism: password_based
+          password_hash_algorithm:
+            name: bcrypt
+          user_id_type: username
+          bootstrap_file: /opt/init-user.json
+          bootstrap_type: plain
+      authorization:
+        sources:
+          - type: built_in_database
+            enable: true
+        no_match: deny
 
   coreTemplate:
     metadata:
@@ -45,6 +30,12 @@ spec:
         reloader.stakater.com/auto: "true"
     spec:
       replicas: 1
+      persistentVolumeClaimSpec:
+        storageClassName: openebs-hostpath # no default StorageClass in this cluster
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 500Mi
       envFrom:
         - secretRef:
             name: emqx-secret
@@ -67,4 +58,3 @@ spec:
     spec:
       type: LoadBalancer
       allocateLoadBalancerNodePorts: false # Cilium LB IPAM serves the IP directly; NodePorts would only add exposed ports
-
