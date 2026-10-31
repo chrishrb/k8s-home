@@ -36,7 +36,7 @@ jobs:
       TF_DATA_DIR: .terraform-check
     steps:
       - uses: actions/checkout@v7
-      - uses: opentofu/setup-opentofu@v1
+      - uses: opentofu/setup-opentofu@v2
         with:
           tofu_version: ${{ env.TOFU_VERSION }}
       - run: tofu fmt -check -recursive infra
@@ -69,7 +69,7 @@ jobs:
         with:
           role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
-      - uses: opentofu/setup-opentofu@v1
+      - uses: opentofu/setup-opentofu@v2
         with:
           tofu_version: ${{ env.TOFU_VERSION }}
       - run: >-
