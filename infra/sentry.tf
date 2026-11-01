@@ -2,11 +2,10 @@
 # React SPA, each with its DSN. The DSNs are not secret; they are chart values
 # of the noonside HelmRelease (sentry.api.dsn, sentry.web.dsn).
 #
-# Moved here from chrishrb/solar0 (infra/modules/sentry, state
-# solar0/prod.tfstate) with `tofu state mv`, see
-# kubernetes/apps/noonside/k8s-migration.md. The organization, its DPA, the
-# GitHub integration and the auth tokens are set up in the Sentry console. New
-# projects get Sentry's default alert rule (email on new high-priority issues).
+# Moved here from chrishrb/solar0's former AWS setup with `tofu state mv`. The
+# organization, its DPA, the GitHub integration and the auth tokens are set up
+# in the Sentry console. New projects get Sentry's default alert rule (email on
+# new high-priority issues).
 
 resource "sentry_team" "noonside" {
   organization = var.sentry_organization

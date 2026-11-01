@@ -1,6 +1,6 @@
 # One-time setup, applied locally with your own AWS credentials: the state
 # bucket for infra/ (and this stack) and the role that GitHub Actions assumes
-# (through the account's existing GitHub OIDC provider) to apply infra/. The
+# (through the account's GitHub OIDC provider) to apply infra/. The
 # first apply runs on local state and then migrates it into the new bucket:
 #   task infra:bootstrap
 
@@ -111,10 +111,16 @@ resource "aws_s3_bucket_lifecycle_configuration" "state" {
 
 # --- GitHub Actions OIDC deploy role -----------------------------------------------
 
-# One provider per URL and account: it already exists and belongs to solar0's
-# infra/bootstrap, so it's only looked up here (importing it would give it two owners).
-data "aws_iam_openid_connect_provider" "github" {
-  url = "https://token.actions.githubusercontent.com"
+# One provider per URL and account. It was created by solar0's infra/bootstrap;
+# `tofu state rm` it there before applying this, or it has two owners.
+import {
+  to = aws_iam_openid_connect_provider.github
+  id = "arn:aws:iam::${local.account_id}:oidc-provider/token.actions.githubusercontent.com"
+}
+
+resource "aws_iam_openid_connect_provider" "github" {
+  url            = "https://token.actions.githubusercontent.com"
+  client_id_list = ["sts.amazonaws.com"]
 }
 
 data "aws_iam_policy_document" "deploy_trust" {
@@ -122,7 +128,7 @@ data "aws_iam_policy_document" "deploy_trust" {
     actions = ["sts:AssumeRoleWithWebIdentity"]
     principals {
       type        = "Federated"
-      identifiers = [data.aws_iam_openid_connect_provider.github.arn]
+      identifiers = [aws_iam_openid_connect_provider.github.arn]
     }
     condition {
       test     = "StringEquals"

@@ -21,7 +21,7 @@ GitOps repo for a home Kubernetes cluster: Talos Linux nodes, with Flux v2 recon
 - `kubernetes/bootstrap/`: Talos (talhelper) and the initial Flux/helmfile bootstrap.
 - `bootstrap/templates/`: makejinja templates from the upstream cluster-template. Not used for day-to-day changes.
 - `infra/`: OpenTofu for what lives outside the cluster: the Contabo VPS (Talos image + instance), the S3 backup buckets with their IAM user, and noonside's Sentry projects. State is in S3 (`k8s-home/infra.tfstate`). The `Infra` workflow applies it from `main` via the GitHub OIDC deploy role. Never run `tofu apply` yourself; changing the instance's `image_id` reinstalls the node.
-- `infra/bootstrap/`: one-time stack, applied locally (`task infra:bootstrap`). It holds the state bucket, the deploy role (scoped to `k8s-home-backup-*` buckets and `k8s-home-*` users) and the permissions boundary for those users. The deploy role trusts the account's GitHub OIDC provider, which solar0's bootstrap owns, so it's only a data source here.
+- `infra/bootstrap/`: one-time stack, applied locally (`task infra:bootstrap`). It holds the state bucket, the deploy role (scoped to `k8s-home-backup-*` buckets and `k8s-home-*` users) and the permissions boundary for those users. It also owns the account's GitHub OIDC provider that the deploy role trusts (imported from solar0's bootstrap).
 
 ## Conventions
 
