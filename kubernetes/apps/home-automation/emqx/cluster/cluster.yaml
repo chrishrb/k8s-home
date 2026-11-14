@@ -4,7 +4,7 @@ kind: EMQX
 metadata:
   name: emqx
 spec:
-  image: docker.io/emqx/emqx:6.3.2 # 6.x isn't published to public.ecr.aws; emqx-operator 3.0 supports 5.9, 5.10 and 6.x
+  image: docker.io/emqx/emqx:6.3.3 # 6.x isn't published to public.ecr.aws; emqx-operator 3.0 supports 5.9, 5.10 and 6.x
 
   # API keys come from the emqx-bootstrap-api-key secret (app/external-secret.yaml):
   # the operator only creates it when it's missing.
